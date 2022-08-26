@@ -10,17 +10,29 @@ const style = {
   bottom: "auto",
   left: "auto",
   position: "fixed",
-  ariaLabel: "login"
+  ariaLabel: "login",
 }
 
-const UserArea = props => {
+const UnauthenticatedUserArea = props => {
   return (
-    <Tooltip title="login" placement="bottom">
-      <Fab style={style} color="error">
+    <Tooltip title="Login" placement="bottom">
+      <Fab color="error" aria-label="login" style={style} onClick={props.onClick}>
         <PersonIcon fontSize="large" />
       </Fab>
     </Tooltip>
   );
+};
+
+const AuthenticatedUserArea = props => {
+  return null;
+};
+
+const UserArea = props => {
+  if (!props.user) {
+    return <UnauthenticatedUserArea onClick={props.onClick} />;
+  } else {
+    return <AuthenticatedUserArea />;
+  };
 };
 
 export default UserArea;
