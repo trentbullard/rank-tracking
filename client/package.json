@@ -1,0 +1,10 @@
+{
+  "name": "rank-tracking-client",
+  "version": "1.0.0",
+  "description": "rank-tracking front-end",
+  "main": "index.js",
+  "repository": "https://github.com/n/a",
+  "author": "n/a",
+  "license": "MIT",
+  "private": false
+}
