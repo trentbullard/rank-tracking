@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
-import { Header } from './components/header/header';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 
 const App = () => {
   return (
     <div className="ui container">
       <Router>
         <Header />
-        <h1>Hello World</h1>
         <Switch>
           <Route exact path="/" component={Home} />
         </Switch>
