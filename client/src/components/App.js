@@ -1,19 +1,23 @@
 import React from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
-import Header from './components/header/header';
-import Footer from './components/footer/footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Container from '@mui/material/Container';
+
+import Header from './header/header';
+import Footer from './footer/footer';
+import Home from '../pages/home/home';
 
 const App = () => {
   return (
-    <div className="ui container">
-      <Router>
+    <Container maxWidth="sm">
+      <BrowserRouter>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
         <Footer />
-      </Router>
-    </div>
+      </BrowserRouter>
+    </Container>
   )
 }
 

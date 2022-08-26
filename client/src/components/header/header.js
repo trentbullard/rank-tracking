@@ -1,11 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 const Header = () => {
-  <h1 className="ui center aligned header" style={{ paddingTop: "3em" }}>
-    <Link href="/">MultiRank</Link>
-    <span className="ui red sub header">BETA</span>
-  </h1>
+  return (
+    <Typography variant="h2" component="h2" gutterBottom>
+      <NavLink to="/">MultiRank</NavLink>
+      <Typography variant="subtitle1" component="span" color="textSecondary">
+        BETA
+      </Typography>
+    </Typography>
+  )
 };
 
 export default Header;
