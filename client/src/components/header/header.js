@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <>
       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ paddingTop: "3em" }}>
-        <Typography variant="h2" component="h2" gutterBottom>
+        <Typography variant="h1" component="h1" gutterBottom>
           <Link to="/" component={NavLink} underline="none">MultiRank</Link>
           <Typography variant="subtitle1" component="span" color="error">
             BETA
