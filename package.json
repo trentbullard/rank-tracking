@@ -6,5 +6,8 @@
   "repository": "https://github.com/trentbullard/rank-tracking.git",
   "author": "trent bullard <trent.bullard@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
