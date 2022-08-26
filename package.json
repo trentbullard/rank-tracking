@@ -2,12 +2,14 @@
   "name": "rank-tracking",
   "version": "1.0.0",
   "description": "rank-tracking root directory for back-end api, /client for front-end",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/trentbullard/rank-tracking.git",
   "author": "trent bullard <trent.bullard@gmail.com>",
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1"
-  }
+  },
+  "type": "module"
 }
