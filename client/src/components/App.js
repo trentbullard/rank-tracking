@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import Header from './header/header';
-import Footer from './footer/footer';
+import Header from './header';
+import Footer from './footer';
 import Home from '../pages/home/home';
 
 const App = () => {
