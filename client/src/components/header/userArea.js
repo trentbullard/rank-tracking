@@ -26,7 +26,7 @@ const UnauthenticatedUserArea = props => {
   );
 };
 
-const AuthenticatedUserArea = props => {
+const AuthenticatedUserArea = _props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = event => {

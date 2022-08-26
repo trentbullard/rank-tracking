@@ -1,11 +1,12 @@
-import { Box, Typography } from '@mui/material';
-import React from 'react';
+import * as React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Box, Typography, Link } from '@mui/material';
 
-const Home = props => {
+const Home = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-      <Typography variant="h2" component="h2" gutterBottom>
-        LOGIN TO PROCEED
+      <Typography variant="h3" component="h3" gutterBottom>
+        <Link to="/" component={NavLink} underline="none">LOGIN TO PROCEED</Link>
       </Typography>
     </Box>
   );
