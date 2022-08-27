@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import Fab from "@mui/material/Fab";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const style = {
   margin: 0,
@@ -31,12 +32,20 @@ const UnauthenticatedUserArea = () => {
 
 const AuthenticatedUserArea = _props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { logout } = React.useContext(AuthContext);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    logout();
+    handleClose();
+    navigate("./login", { replace: true });
   };
   
   return (
@@ -52,17 +61,18 @@ const AuthenticatedUserArea = _props => {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </>
   );
 };
 
-const UserArea = props => {
-  if (!props.user) {
-    return <UnauthenticatedUserArea />;
-  } else {
+const UserArea = () => {
+  const { currentUser } = React.useContext(AuthContext);
+  if (currentUser) {
     return <AuthenticatedUserArea />;
+  } else {
+    return <UnauthenticatedUserArea />;
   };
 };
 

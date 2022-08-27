@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Checkbox,
@@ -15,6 +15,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { motion } from 'framer-motion';
+import { AuthContext } from '../contexts/AuthContext';
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -43,12 +44,21 @@ const fadeInUp = {
   },
 };
 
-const LoginForm = props => {
+const LoginForm = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [rememberMe, setRememberMe] = React.useState(true);
+  const [remember, setRemember] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const { setCurrentUser } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const onSubmit = e => {
+    e.preventDefault();
+    setLoading(true);
+    setCurrentUser({ username, remember });
+    navigate("/", { replace: true });
+  };
 
   return (
     <Box display="flex" flexDirection="column">
@@ -114,8 +124,8 @@ const LoginForm = props => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={rememberMe}
-                onChange={event => setRememberMe(event.target.checked)}
+                checked={remember}
+                onChange={event => setRemember(event.target.checked)}
               />
             }
             label="Remember Me"
@@ -130,7 +140,7 @@ const LoginForm = props => {
           size="large"
           variant="contained"
           loading={loading}
-          onClick={() => {setLoading(true); props.onLogin(username, password, rememberMe); setLoading(false);}}
+          onClick={onSubmit}
         >
           {loading ? 'Loading...' : 'Login'}
         </LoadingButton>
@@ -142,7 +152,7 @@ const LoginForm = props => {
         align="center"
         sx={{ mt: 3 }}
       >
-        Don't have an account? <Link to="/register">Sign up</Link>
+        Don't have an account? <Link to="#">Sign up</Link>
       </Typography>
     </Box>
   );

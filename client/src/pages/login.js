@@ -1,12 +1,16 @@
 import * as React from 'react';
+import { Navigate } from 'react-router-dom';
 import { Box, Container, Divider, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 import LoginForm from '../components/LoginForm';
 import SocialAuth from '../components/SocialAuth';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Login = () => {
+  const { currentUser } = React.useContext(AuthContext);
+  
   const RootStyle = styled("div")({
     background: "rgb(249, 250, 251)",
   });
@@ -42,6 +46,12 @@ const Login = () => {
     },
   };
 
+  if (currentUser) {
+    return (
+      <Navigate to="/" replace={true} />
+    )
+  };
+
   return (
     <RootStyle>
       <Container maxWidth="sm">
@@ -62,7 +72,7 @@ const Login = () => {
             </Typography>
           </Divider>
 
-          <LoginForm />
+          <LoginForm currentUser={currentUser} />
 
         </ContentStyle>
       </Container>
