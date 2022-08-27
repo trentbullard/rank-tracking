@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Box, Typography, Link } from '@mui/material';
-import LoginForm from './login';
+import { Navigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
-const Home = () => {
-  return (
-    <>
-      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-        <Typography>
-          <Link to="/" component={NavLink} underline="none" color="black">LOGIN TO PROCEED</Link>
-        </Typography>
-      </Box>
-      <LoginForm />
-    </>
-  );
+const Home = props => {
+  if (props.user) {
+    return (
+      <Typography variant="h5" component="h1" gutterBottom>
+        Welcome {props.user.name}!
+      </Typography>
+    )
+  } else {
+    return (
+      <Navigate to="/login" replace={true} />
+    )
+  }
 };
 
 export default Home;

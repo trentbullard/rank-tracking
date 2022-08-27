@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import Fab from "@mui/material/Fab";
 import PersonIcon from "@mui/icons-material/Person";
@@ -16,12 +17,14 @@ const style = {
   ariaLabel: "login",
 }
 
-const UnauthenticatedUserArea = props => {
+const UnauthenticatedUserArea = () => {
   return (
     <Tooltip title="Login" placement="bottom">
-      <Fab color="error" style={style} aria-label="login" onClick={props.onClick}>
-        <PersonIcon fontSize="large" />
-      </Fab>
+      <RouterLink to="/login">
+        <Fab color="error" style={style} aria-label="login">
+          <PersonIcon fontSize="large" />
+        </Fab>
+      </RouterLink>
     </Tooltip>
   );
 };
@@ -57,7 +60,7 @@ const AuthenticatedUserArea = _props => {
 
 const UserArea = props => {
   if (!props.user) {
-    return <UnauthenticatedUserArea onClick={props.onClick} />;
+    return <UnauthenticatedUserArea />;
   } else {
     return <AuthenticatedUserArea />;
   };

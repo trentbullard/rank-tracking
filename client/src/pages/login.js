@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { Box, Container, TextField } from '@mui/material';
+import { Box, Container, Divider, Typography } from '@mui/material';
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
-const LoginForm = () => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  // const [error, setError] = React.useState('');
+import LoginForm from '../components/LoginForm';
+import SocialAuth from '../components/SocialAuth';
 
-  const onSubmit = async event => {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    // const ciphertext = encryptData({ username, password });
-    return null;
-  };
+const Login = () => {
+  const RootStyle = styled("div")({
+    background: "rgb(249, 250, 251)",
+  });
+  
+  const HeadingStyle = styled(Box)({
+    textAlign: "center",
+  });
+  
+  const ContentStyle = styled("div")({
+    maxWidth: 480,
+    padding: 25,
+    margin: "auto",
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    background: "#fff",
+  });
 
   let easing = [0.6, -0.05, 0.01, 0.99];
   const fadeInUp = {
@@ -32,21 +43,31 @@ const LoginForm = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        component="form"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1em',
-        }}
-      >
-        <TextField label="Username" name="username" value={username} fullWidth onChange={event => setUsername(event.target.value)} />
-        <TextField label="Password" name="password" value={password} type="password" fullWidth onChange={event => setPassword(event.target.value)} />
-      </Box>
-    </Container>
+    <RootStyle>
+      <Container maxWidth="sm">
+        <ContentStyle>
+          <HeadingStyle component={motion.div} {...fadeInUp}>
+            <Typography sx={{ color: "text.secondary", mb: 4}}>
+              Login to Your Account
+            </Typography>
+          </HeadingStyle>
+
+          <Box component={motion.div} {...fadeInUp}>
+            <SocialAuth />
+          </Box>
+
+          <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
+            <Typography sx={{ color: "text.secondary" }} variant="body2">
+              Or
+            </Typography>
+          </Divider>
+
+          <LoginForm />
+
+        </ContentStyle>
+      </Container>
+    </RootStyle>
   );
 };
 
-export default LoginForm;
+export default Login;
