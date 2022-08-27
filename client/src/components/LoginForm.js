@@ -152,7 +152,7 @@ const LoginForm = () => {
         align="center"
         sx={{ mt: 3 }}
       >
-        Don't have an account? <Link to="#">Sign up</Link>
+        Don't have an account? <Link component={RouterLink} to="#">Sign up</Link>
       </Typography>
     </Box>
   );
