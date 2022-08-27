@@ -29,6 +29,8 @@ export const AuthProvider = ({ children }) => {
         Cookies.remove(cookieName);
       }
     },
+    session,
+    setSession,
     referrer,
     setReferrer,
     logout,

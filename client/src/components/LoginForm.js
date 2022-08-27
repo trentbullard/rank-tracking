@@ -50,6 +50,7 @@ const LoginForm = () => {
   const [remember, setRemember] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [ error, setError ] = React.useState({});
   const { setCurrentUser } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -85,7 +86,19 @@ const LoginForm = () => {
             name="username"
             value={username}
             fullWidth
-            onChange={event => setUsername(event.target.value)}
+            onChange={event => {
+              setUsername(event.target.value);
+              if (!!event.target.value && event.target.value.length > 0) {
+                setError({ ...error, username: null });
+              };
+            }}
+            onBlur={() => {
+              if (!username || username.length < 1) {
+                setError({ ...error, username: 'Username is required' });
+              };
+            }}
+            error={!!error.username}
+            helperText={error.username}
           />
           <TextField
             label="Password"
@@ -93,7 +106,12 @@ const LoginForm = () => {
             value={password}
             type={showPassword ? "text" : "password"}
             fullWidth
-            onChange={event => setPassword(event.target.value)}
+            onChange={event => {
+              setPassword(event.target.value);
+              if (!!event.target.value || event.target.value.length > 0) {
+                setError({ ...error, password: null });
+              };
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -106,6 +124,13 @@ const LoginForm = () => {
                 </InputAdornment>
               ),
             }}
+            onBlur={() => {
+              if (!password || password.length < 1) {
+                setError({ ...error, password: 'Password is required' });
+              };
+            }}
+            error={!!error.password}
+            helperText={error.password}
           />
         </Box>
       </Box>
