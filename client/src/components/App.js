@@ -9,14 +9,30 @@ import { AuthContext } from '../contexts/AuthContext';
 
 const App = () => {
   const { currentUser } = React.useContext(AuthContext);
+
+  const RequireAuth = ({ children }) => {
+    return !!currentUser ? children : <Navigate to="/login" replace />;
+  };
+
+  const RequireNoAuth = ({ children }) => {
+    return !currentUser ? children : <Navigate to="/home" replace />;
+  };
   
   return (
     <BrowserRouter>
       <Header currentUser={currentUser} />
       <Container>
         <Routes>
-          <Route path="/" element={<Home currentUser={currentUser} />} />
-          <Route path="/login" element={<Login currentUser={currentUser} />} />
+          <Route path="/" element={
+            <RequireAuth>
+              <Home currentUser={currentUser} />
+            </RequireAuth>
+          } />
+          <Route path="/login" element={
+            <RequireNoAuth>
+              <Login currentUser={currentUser} />
+            </RequireNoAuth>
+          } />
         </Routes>
       </Container>
     </BrowserRouter>
