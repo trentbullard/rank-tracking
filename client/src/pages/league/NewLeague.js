@@ -43,18 +43,16 @@ const NewLeague = () => {
   
   return (
     <RootStyle>
-      <Container maxWidth="sm">
-        <ContentStyle>
-          <HeadingStyle component={motion.div} {...fadeInUp}>
-            <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
-              New League
-            </Typography>
-          </HeadingStyle>
+      <ContentStyle>
+        <HeadingStyle component={motion.div} {...fadeInUp}>
+          <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
+            New League
+          </Typography>
+        </HeadingStyle>
 
-          <NewLeagueForm />
+        <NewLeagueForm />
 
-        </ContentStyle>
-      </Container>
+      </ContentStyle>
     </RootStyle>
   )
 };
