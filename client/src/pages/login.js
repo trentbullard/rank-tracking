@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Navigate } from 'react-router-dom';
 import { Box, Container, Divider, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';

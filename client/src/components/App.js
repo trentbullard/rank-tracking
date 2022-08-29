@@ -15,7 +15,7 @@ const App = () => {
   };
 
   const RequireNoAuth = ({ children }) => {
-    return !currentUser ? children : <Navigate to="/home" replace />;
+    return !currentUser ? children : <Navigate to="/" replace />;
   };
   
   return (
@@ -28,7 +28,7 @@ const App = () => {
               <Home currentUser={currentUser} />
             </RequireAuth>
           } />
-          <Route path="/login" element={
+          <Route path="login" element={
             <RequireNoAuth>
               <Login currentUser={currentUser} />
             </RequireNoAuth>
