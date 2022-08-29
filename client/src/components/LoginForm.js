@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
@@ -87,14 +88,14 @@ const LoginForm = () => {
               name="username"
               value={username}
               fullWidth
-              onChange={event => {
-                setUsername(event.target.value);
-                if (!!event.target.value && event.target.value.length > 0) {
+              onChange={e => {
+                setUsername(e.target.value);
+                if (!_.isNull(e.target.value) && !_.isEmpty(e.target.value.trim())) {
                   setError({ ...error, username: null });
                 };
               }}
               onBlur={() => {
-                if (!username || username.length < 1) {
+                if (_.isNull(username) || _.isEmpty(username.trim())) {
                   setError({ ...error, username: 'Username is required' });
                 };
               }}
@@ -107,9 +108,9 @@ const LoginForm = () => {
               value={password}
               type={showPassword ? "text" : "password"}
               fullWidth
-              onChange={event => {
-                setPassword(event.target.value);
-                if (!!event.target.value || event.target.value.length > 0) {
+              onChange={e => {
+                setPassword(e.target.value);
+                if (!_.isNull(e.target.value) && !_.isEmpty(e.target.value.trim())) {
                   setError({ ...error, password: null });
                 };
               }}
@@ -126,7 +127,7 @@ const LoginForm = () => {
                 ),
               }}
               onBlur={() => {
-                if (!password || password.length < 1) {
+                if (_.isNull(password) || _.isEmpty(password.trim())) {
                   setError({ ...error, password: 'Password is required' });
                 };
               }}
