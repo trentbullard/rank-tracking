@@ -87,7 +87,7 @@ const LoginForm = () => {
             value={username}
             fullWidth
             onChange={event => {
-              setUsername(event.target.value);
+              setUsername(event.target.value.trim());
               if (!!event.target.value && event.target.value.length > 0) {
                 setError({ ...error, username: null });
               };
@@ -107,7 +107,7 @@ const LoginForm = () => {
             type={showPassword ? "text" : "password"}
             fullWidth
             onChange={event => {
-              setPassword(event.target.value);
+              setPassword(event.target.value.trim());
               if (!!event.target.value || event.target.value.length > 0) {
                 setError({ ...error, password: null });
               };
