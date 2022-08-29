@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -46,7 +47,7 @@ const NewLeagueForm = () => {
     setLoading(true);
     // send data to server and await response
     let id = 1; // get id from server response
-    navigate(`leagues/${id}`, { replace: true });
+    navigate(`/leagues/${id}`, { replace: true });
   };
 
   const sports = [
@@ -122,17 +123,24 @@ const NewLeagueForm = () => {
               {!!sportTouched && _.isEmpty(sport) && <FormHelperText>{sportError}</FormHelperText>}
             </FormControl>
 
-            <LoadingButton
-              type="submit"
-              fullWidth
-              size="large"
-              variant="contained"
-              loading={loading}
-              onClick={()=>{}}
-              disabled={_.isEmpty(name) || _.isEmpty(sport)}
-            >
-              {loading ? 'Loading...' : 'Create'}
-            </LoadingButton>
+            <Box display="flex" justifyContent="space-between">
+              <Button
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </Button>
+              
+              <LoadingButton
+                type="submit"
+                size="large"
+                variant="contained"
+                loading={loading}
+                onClick={()=>{}}
+                disabled={!_.isEmpty(nameError) || !_.isEmpty(sportError) || _.isEmpty(name) || _.isEmpty(sport)}
+              >
+                {loading ? 'Loading...' : 'Create'}
+              </LoadingButton>
+            </Box>
           </Box>
         </Box>
       </form>
