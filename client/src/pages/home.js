@@ -7,9 +7,9 @@ import LeagueList from '../components/league/LeagueList';
 
 const Home = ({currentUser}) => {
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ paddingTop: "3em" }}>
+    <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ pt: "3em" }}>
       <Box>
-        <Typography variant="h3" component="h3" gutterBottom>
+        <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
           {currentUser}'s Leagues
           <Tooltip title="Create League" placement="top">
             <RouterLink to="/leagues/new">
