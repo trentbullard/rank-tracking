@@ -50,7 +50,7 @@ const Login = () => {
       <Container maxWidth="sm">
         <ContentStyle>
           <HeadingStyle component={motion.div} {...fadeInUp}>
-            <Typography sx={{ color: "text.secondary", mb: 4 }}>
+            <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
               Login to Your Account
             </Typography>
           </HeadingStyle>
