@@ -46,12 +46,6 @@ const Login = () => {
     },
   };
 
-  if (currentUser) {
-    return (
-      <Navigate to="/" replace={true} />
-    )
-  };
-
   return (
     <RootStyle>
       <Container maxWidth="sm">
