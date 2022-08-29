@@ -50,8 +50,8 @@ const LoginForm = () => {
   const [remember, setRemember] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [ error, setError ] = React.useState({});
-  const { setCurrentUser } = React.useContext(AuthContext);
+  const [error, setError] = React.useState({});
+  const {setCurrentUser} = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = e => {
@@ -166,6 +166,7 @@ const LoginForm = () => {
           variant="contained"
           loading={loading}
           onClick={onSubmit}
+          disabled={loading || username.length < 1 || password.length < 1}
         >
           {loading ? 'Loading...' : 'Login'}
         </LoadingButton>
