@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Paper,
@@ -108,6 +109,7 @@ const LeagueList = () => {
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const navigate = useNavigate();
 
   const handleRequestSort = (_event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -145,11 +147,13 @@ const LeagueList = () => {
               .map((row, rowIndex) => {
                 return (
                   <TableRow
+                    hover
                     key={rowIndex}
+                    onClick={() => navigate(`/leagues/${row.name}`)}
                   >
                     {Object.values(row).map((value, valueIndex) => {
                       return (
-                        <TableCell sx={{ whiteSpace: 'nowrap' }} key={`${rowIndex}${valueIndex}`}>
+                        <TableCell sx={{ whiteSpace: 'nowrap', cursor: 'default' }} key={`${rowIndex}${valueIndex}`}>
                           {value}
                         </TableCell>
                       );
