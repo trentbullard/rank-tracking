@@ -63,114 +63,117 @@ const LoginForm = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box
-        component={motion.div}
-        animate={{
-          transition: {
-            staggerChildren: 0.55,
-          },
-        }}
-      >
+      <form onSubmit={onSubmit}>
         <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 3,
-          }}
           component={motion.div}
-          initial={{ opacity: 0, y: 40 }}
+          animate={{
+            transition: {
+              staggerChildren: 0.55,
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+            }}
+            component={motion.div}
+            initial={{ opacity: 0, y: 40 }}
+            animate={animate}
+          >
+            <TextField
+              label="Username"
+              name="username"
+              value={username}
+              fullWidth
+              onChange={event => {
+                setUsername(event.target.value);
+                if (!!event.target.value && event.target.value.length > 0) {
+                  setError({ ...error, username: null });
+                };
+              }}
+              onBlur={() => {
+                if (!username || username.length < 1) {
+                  setError({ ...error, username: 'Username is required' });
+                };
+              }}
+              error={!!error.username}
+              helperText={error.username}
+            />
+            <TextField
+              label="Password"
+              name="password"
+              value={password}
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              onChange={event => {
+                setPassword(event.target.value);
+                if (!!event.target.value || event.target.value.length > 0) {
+                  setError({ ...error, password: null });
+                };
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              onBlur={() => {
+                if (!password || password.length < 1) {
+                  setError({ ...error, password: 'Password is required' });
+                };
+              }}
+              error={!!error.password}
+              helperText={error.password}
+            />
+          </Box>
+        </Box>
+
+        <Box
+          component={motion.div}
+          initial={{ opacity: 0, y: 20 }}
           animate={animate}
         >
-          <TextField
-            label="Username"
-            name="username"
-            value={username}
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ my: 2 }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={remember}
+                  onChange={event => setRemember(event.target.checked)}
+                />
+              }
+              label="Remember Me"
+            />
+            <Link component={RouterLink} to="#">
+              Forgot Password?
+            </Link>
+          </Stack>
+
+          <LoadingButton
+            type="submit"
             fullWidth
-            onChange={event => {
-              setUsername(event.target.value);
-              if (!!event.target.value && event.target.value.length > 0) {
-                setError({ ...error, username: null });
-              };
-            }}
-            onBlur={() => {
-              if (!username || username.length < 1) {
-                setError({ ...error, username: 'Username is required' });
-              };
-            }}
-            error={!!error.username}
-            helperText={error.username}
-          />
-          <TextField
-            label="Password"
-            name="password"
-            value={password}
-            type={showPassword ? "text" : "password"}
-            fullWidth
-            onChange={event => {
-              setPassword(event.target.value);
-              if (!!event.target.value || event.target.value.length > 0) {
-                setError({ ...error, password: null });
-              };
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            onBlur={() => {
-              if (!password || password.length < 1) {
-                setError({ ...error, password: 'Password is required' });
-              };
-            }}
-            error={!!error.password}
-            helperText={error.password}
-          />
+            size="large"
+            variant="contained"
+            loading={loading}
+            onClick={onSubmit}
+            disabled={loading || username.length < 1 || password.length < 1}
+          >
+            {loading ? 'Loading...' : 'Login'}
+          </LoadingButton>
         </Box>
-      </Box>
-
-      <Box
-        component={motion.div}
-        initial={{ opacity: 0, y: 20 }}
-        animate={animate}
-      >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ my: 2 }}
-        >
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={remember}
-                onChange={event => setRemember(event.target.checked)}
-              />
-            }
-            label="Remember Me"
-          />
-          <Link component={RouterLink} to="#">
-            Forgot Password?
-          </Link>
-        </Stack>
-
-        <LoadingButton
-          fullWidth
-          size="large"
-          variant="contained"
-          loading={loading}
-          onClick={onSubmit}
-          disabled={loading || username.length < 1 || password.length < 1}
-        >
-          {loading ? 'Loading...' : 'Login'}
-        </LoadingButton>
-      </Box>
+      </form>
       <Typography
         component={motion.p}
         {...fadeInUp}
