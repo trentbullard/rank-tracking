@@ -66,84 +66,74 @@ const NewLeagueForm = () => {
   ];
 
   return (
-    <Box display="flex" flexDirection="column">
-      <form onSubmit={onSubmit}>
-        <Box
-          component={motion.div}
-          animate={{
-            transition: {
-              staggerChildren: 0.55,
-            },
+    <Box component="form" onSubmit={onSubmit} width="100%">
+      <Box
+        component={motion.div}
+        initial={{ opacity: 0, y: 40 }}
+        animate={animate}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
+      >
+        <TextField
+          label="Name"
+          name="name"
+          value={name}
+          required
+          fullWidth
+          onChange={e => {
+            setName(e.target.value)
+            if (!_.isNull(e.target.value) || !_.isEmpty(e.target.value.trim())) {
+              setNameError('');
+            };
           }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 3,
-            }}
-            component={motion.div}
-            initial={{ opacity: 0, y: 40 }}
-            animate={animate}
+          onBlur={() => {
+            if (_.isNull(name) || _.isEmpty(name.trim())) {
+              setNameError('Name is required');
+            };
+          }}
+          error={!_.isEmpty(nameError)}
+          helperText={nameError}
+        />
+
+        <FormControl variant="outlined" fullWidth required error={!!sportTouched && _.isEmpty(sport)}>
+          <InputLabel id="sport-select-label">Sport</InputLabel>
+          <Select
+            labelId="sport-select-label"
+            id="sport-select"
+            value={sport}
+            label="Sport"
+            onChange={e => setSport(e.target.value)}
+            onBlur={() => setSportTouched(true)}
           >
-            <TextField
-              label="Name"
-              name="name"
-              value={name}
-              fullWidth
-              onChange={e => {
-                setName(e.target.value)
-                if (!_.isNull(e.target.value) || !_.isEmpty(e.target.value.trim())) {
-                  setNameError('');
-                };
-              }}
-              onBlur={() => {
-                if (_.isNull(name) || _.isEmpty(name.trim())) {
-                  setNameError('Name is required');
-                };
-              }}
-              error={!_.isEmpty(nameError)}
-              helperText={nameError}
-            />
+            {_.sortBy(sports, 'label').map(sport => (
+              <MenuItem key={sport.value} value={sport.value}>{sport.label}</MenuItem>
+            ))}
+          </Select>
+          {!!sportTouched && _.isEmpty(sport) && <FormHelperText>{sportError}</FormHelperText>}
+        </FormControl>
 
-            <FormControl variant="outlined" fullWidth required={!sportTouched} error={!!sportTouched && _.isEmpty(sport)}>
-              <InputLabel id="sport-select-label">Sport</InputLabel>
-              <Select
-                labelId="sport-select-label"
-                id="sport-select"
-                value={sport}
-                label="Sport"
-                onChange={e => setSport(e.target.value)}
-                onBlur={() => setSportTouched(true)}
-              >
-                {_.sortBy(sports, 'label').map(sport => (
-                  <MenuItem key={sport.value} value={sport.value}>{sport.label}</MenuItem>
-                ))}
-              </Select>
-              {!!sportTouched && _.isEmpty(sport) && <FormHelperText>{sportError}</FormHelperText>}
-            </FormControl>
-
-            <Box display="flex" justifyContent="space-between">
-              <Button
-                onClick={() => navigate(-1)}
-              >
-                Cancel
-              </Button>
-              
-              <LoadingButton
-                type="submit"
-                size="large"
-                variant="contained"
-                loading={loading}
-                onClick={()=>{}}
-                disabled={!_.isEmpty(nameError) || !_.isEmpty(sportError) || _.isEmpty(name) || _.isEmpty(sport)}
-              >
-                {loading ? 'Loading...' : 'Create'}
-              </LoadingButton>
-            </Box>
-          </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Button
+            onClick={() => navigate(-1)}
+          >
+            Cancel
+          </Button>
+          
+          <LoadingButton
+            type="submit"
+            size="large"
+            variant="contained"
+            loading={loading}
+            onClick={()=>{}}
+            disabled={!_.isEmpty(nameError) || !_.isEmpty(sportError) || _.isEmpty(name) || _.isEmpty(sport)}
+          >
+            {loading ? 'Loading...' : 'Create'}
+          </LoadingButton>
         </Box>
-      </form>
+      </Box>
     </Box>
   )
 };

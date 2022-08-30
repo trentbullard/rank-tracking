@@ -1,27 +1,19 @@
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 import NewLeagueForm from '../../components/league/NewLeagueForm';
 
 const NewLeague = () => {
-  const RootStyle = styled("div")({
-    background: "rgb(249, 250, 251)",
-  });
-  
-  const HeadingStyle = styled(Box)({
-    textAlign: "center",
-  });
-  
-  const ContentStyle = styled("div")({
+  const ContentStyle = styled(Paper)({
     maxWidth: 480,
-    padding: 25,
+    padding: 15,
     margin: "auto",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    background: "#fff",
+    alignItems:"center",
   });
 
   let easing = [0.6, -0.05, 0.01, 0.99];
@@ -42,18 +34,16 @@ const NewLeague = () => {
   };
   
   return (
-    <RootStyle>
-      <ContentStyle>
-        <HeadingStyle component={motion.div} {...fadeInUp}>
-          <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
-            New League
-          </Typography>
-        </HeadingStyle>
+    <ContentStyle>
+      <Box component={motion.div} {...fadeInUp}>
+        <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
+          New League
+        </Typography>
+      </Box>
 
-        <NewLeagueForm />
+      <NewLeagueForm />
 
-      </ContentStyle>
-    </RootStyle>
+    </ContentStyle>
   )
 };
 
