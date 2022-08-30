@@ -10,10 +10,6 @@ import { AuthContext } from '../contexts/AuthContext';
 const Login = () => {
   const { currentUser } = React.useContext(AuthContext);
   
-  const RootStyle = styled("div")({
-    background: "rgb(249, 250, 251)",
-  });
-  
   const HeadingStyle = styled(Box)({
     textAlign: "center",
   });
@@ -46,30 +42,26 @@ const Login = () => {
   };
 
   return (
-    <RootStyle>
-      <Container maxWidth="sm">
-        <ContentStyle>
-          <HeadingStyle component={motion.div} {...fadeInUp}>
-            <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
-              Login to Your Account
-            </Typography>
-          </HeadingStyle>
+    <ContentStyle>
+      <HeadingStyle component={motion.div} {...fadeInUp}>
+        <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
+          Login to Your Account
+        </Typography>
+      </HeadingStyle>
 
-          <Box component={motion.div} {...fadeInUp}>
-            <SocialAuth />
-          </Box>
+      <Box component={motion.div} {...fadeInUp}>
+        <SocialAuth />
+      </Box>
 
-          <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
-            <Typography sx={{ color: "text.secondary" }} variant="body2">
-              Or
-            </Typography>
-          </Divider>
+      <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
+        <Typography sx={{ color: "text.secondary" }} variant="body2">
+          Or
+        </Typography>
+      </Divider>
 
-          <LoginForm currentUser={currentUser} />
+      <LoginForm currentUser={currentUser} />
 
-        </ContentStyle>
-      </Container>
-    </RootStyle>
+    </ContentStyle>
   );
 };
 
