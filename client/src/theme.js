@@ -46,4 +46,4 @@ let darkTheme = createTheme({
 lightTheme = responsiveFontSizes(lightTheme);
 darkTheme = responsiveFontSizes(darkTheme);
 
-export default darkTheme;
+export { lightTheme, darkTheme };

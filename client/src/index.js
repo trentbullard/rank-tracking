@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 import App from "./components/App";
-import theme from "./theme";
+import { darkTheme as theme } from "./theme";
 import AuthProvider from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
