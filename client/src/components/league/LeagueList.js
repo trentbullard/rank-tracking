@@ -183,6 +183,17 @@ const LeagueList = () => {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            SelectProps={{
+              sx: {
+                ml: "0px",
+                mr: "5px",
+              },
+            }}
+            sx={{
+              ".MuiTablePagination-actions": {
+                mx: "0px",
+              },
+            }}
           />
         </Box>
       )}
