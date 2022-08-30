@@ -9,33 +9,33 @@ const SocialAuth = () => {
     <Stack spacing={2} direction="row">
       <IconButton
         sx={{
-          border: "2px solid #ccc",
+          border: "1px solid #ccc",
           borderRadius: "5px",
           padding: "0.5675rem",
           flex: 1,
         }}
       >
-        <GoogleIcon style={{ color: "#DF3E30" }} width={22} height={22} />
+        <GoogleIcon sx={{ color: "#DF3E30" }} width={22} height={22} />
       </IconButton>
       <IconButton
         sx={{
-          border: "2px solid #ccc",
+          border: "1px solid #ccc",
           borderRadius: "5px",
           padding: "0.5675rem",
           flex: 1,
         }}
       >
-        <FacebookIcon style={{ color: "#1877F2" }} width={22} height={22} />
+        <FacebookIcon sx={{ color: "#1877F2" }} width={22} height={22} />
       </IconButton>
       <IconButton
         sx={{
-          border: "2px solid #ccc",
+          border: "1px solid #ccc",
           borderRadius: "5px",
           padding: "0.5675rem",
           flex: 1,
         }}
       >
-        <TwitterIcon style={{ color: "#1C9CEA" }} width={22} height={22} />
+        <TwitterIcon sx={{ color: "#1C9CEA" }} width={22} height={22} />
       </IconButton>
     </Stack>
   );
