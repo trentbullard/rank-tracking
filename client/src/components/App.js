@@ -6,6 +6,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import Header from './header/Header';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import LeagueDetails from '../pages/league/LeagueDetails';
 import NewLeague from '../pages/league/NewLeague';
 
 const App = () => {
@@ -24,24 +25,11 @@ const App = () => {
       <Header currentUser={currentUser} />
       <Container>
         <Routes>
-          
-          <Route path="/" element={
-            <RequireAuth>
-              <Home currentUser={currentUser} />
-            </RequireAuth>
-          } />
-
-          <Route path="leagues/new" element={
-            <RequireAuth>
-              <NewLeague />
-            </RequireAuth>
-          } />
-          
-          <Route path="login" element={
-            <RequireNoAuth>
-              <Login currentUser={currentUser} />
-            </RequireNoAuth>
-          } />
+          <Route path="/" element={<RequireAuth><Home currentUser={currentUser} /></RequireAuth>} />
+          <Route path="/leagues" element={<RequireAuth><LeagueDetails /></RequireAuth>} />
+          <Route path="/leagues/new" element={<RequireAuth><NewLeague /></RequireAuth>} />
+          <Route path="/leagues/:id" element={<RequireAuth><LeagueDetails /></RequireAuth>} />
+          <Route path="/login" element={<RequireNoAuth><Login currentUser={currentUser} /></RequireNoAuth>} />
         </Routes>
       </Container>
     </BrowserRouter>
