@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Container, Divider, Typography } from '@mui/material';
+import { Box, Divider, Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
@@ -14,14 +14,13 @@ const Login = () => {
     textAlign: "center",
   });
   
-  const ContentStyle = styled("div")({
+  const ContentStyle = styled(Paper)({
     maxWidth: 480,
-    padding: 25,
+    padding: 15,
     margin: "auto",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    background: "#fff",
   });
 
   let easing = [0.6, -0.05, 0.01, 0.99];
