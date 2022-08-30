@@ -20,13 +20,13 @@ const style = {
 
 const UnauthenticatedUserArea = () => {
   return (
-    <Tooltip title="Login" placement="bottom">
-      <RouterLink to="/login">
-        <Fab color="error" style={style} aria-label="login">
+    <RouterLink to="/login" replace>
+      <Tooltip title="Login">
+        <Fab color="secondary" style={style} aria-label="login">
           <PersonIcon fontSize="large" />
         </Fab>
-      </RouterLink>
-    </Tooltip>
+      </Tooltip>
+    </RouterLink>
   );
 };
 
@@ -50,9 +50,11 @@ const AuthenticatedUserArea = _props => {
   
   return (
     <>
-      <Fab color="error" style={style} aria-label="settings" onClick={handleClick}>
-        <AdminPanelSettingsIcon fontSize="large" />
-      </Fab>
+      <Tooltip title="Settings">
+        <Fab color="secondary" style={style} aria-label="settings" onClick={handleClick}>
+          <AdminPanelSettingsIcon fontSize="large" />
+        </Fab>
+      </Tooltip>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
