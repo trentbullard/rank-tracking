@@ -7,19 +7,17 @@ import LeagueList from '../components/league/LeagueList';
 
 const Home = ({currentUser}) => {
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ pt: "3em" }}>
-      <Box>
-        <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
-          {currentUser}'s Leagues
-          <Tooltip title="Create League" placement="top">
-            <RouterLink to="/leagues/new">
-              <IconButton aria-label="add" component="span" color="secondary">
-                <AddCircleIcon fontSize="large"/>
-              </IconButton>
-            </RouterLink>
-          </Tooltip>
-        </Typography>
-      </Box>
+    <Box maxWidth="100%" display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ pt: "1em" }}>
+      <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
+        {currentUser}'s Leagues
+        <Tooltip title="Create League" placement="top">
+          <RouterLink to="/leagues/new">
+            <IconButton aria-label="add" component="span" color="secondary">
+              <AddCircleIcon fontSize="large"/>
+            </IconButton>
+          </RouterLink>
+        </Tooltip>
+      </Typography>
       <LeagueList currentUser={currentUser} />
     </Box>
   );
