@@ -34,10 +34,9 @@ root.render(
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Home />} />
-              <Route path="leagues" element={<Leagues />}>
-                <Route path="new" element={<NewLeague />} />
-                <Route path=":id" element={<LeagueDetails />} />
-              </Route>
+              <Route path="leagues" element={<Leagues />} />
+              <Route path="leagues/new" element={<NewLeague />} />
+              <Route path="leagues/:id" element={<LeagueDetails />} />
               <Route path="login" element={<Login />} />
               <Route path="*" element={<NotFound />} />
             </Route>
