@@ -18,4 +18,5 @@ export default styled(Box)({
   flexDirection: "column",
   paddingTop: "1em",
   margin: "auto",
+  gap: "5rem",
 });

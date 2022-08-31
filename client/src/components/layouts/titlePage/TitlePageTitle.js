@@ -8,8 +8,8 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 const TitlePageTitle = ({ title, action }) => {
   if (action) {
     return (
-      <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="row" sx={{ color: "text.secondary", mb: 4 }}>
-        <Typography variant="h4">
+      <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="row" sx={{ mb: 4 }}>
+        <Typography variant="h3">
           {title}
         </Typography>
         <Tooltip title={action.tooltip} placement="top">
@@ -23,7 +23,7 @@ const TitlePageTitle = ({ title, action }) => {
     );
   } else {
     return (
-      <Typography variant="h4" sx={{ color: "text.secondary", mb: 4 }}>
+      <Typography variant="h3">
         {title}
       </Typography>
     );
