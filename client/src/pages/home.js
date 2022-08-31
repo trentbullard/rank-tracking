@@ -1,22 +1,13 @@
-import * as React from 'react';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Box, Typography } from '@mui/material';
 
 import { TitlePageLayout } from '../components/layouts';
-import LeagueList from '../components/league/LeagueList';
 
-const Home = ({currentUser}) => {
+const Home = () => {
+  const currentUser = 'trent';
+
   return (
-    <TitlePageLayout
-      title={`${currentUser}'s Leagues`}
-      action={{
-        component: AddCircleIcon,
-        tooltip: 'Create a new league',
-        url: '/leagues/new',
-      }}
-    >
-      <LeagueList />
-    </TitlePageLayout>
-  )
+    <TitlePageLayout title={`Hello ${currentUser}`} />
+  );
 };
 
 export default Home;
