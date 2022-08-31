@@ -3,8 +3,8 @@ import { Box, Divider, Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-import LoginForm from '../components/LoginForm';
-import SocialAuth from '../components/SocialAuth';
+import LoginForm from '../components/login/LoginForm';
+import SocialAuth from '../components/login/SocialAuth';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Login = () => {
