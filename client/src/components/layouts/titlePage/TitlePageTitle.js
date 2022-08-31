@@ -23,7 +23,7 @@ const TitlePageTitle = ({ title, action }) => {
     );
   } else {
     return (
-      <Typography variant="h3">
+      <Typography variant="h3" sx={{ mb: 4 }}>
         {title}
       </Typography>
     );
