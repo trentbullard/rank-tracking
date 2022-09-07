@@ -162,6 +162,53 @@ ref: player_objectives.player_id > players.id
 ref: player_objectives.objective_id > objectives.id
 ref: player_objectives.game_id > games.id
 
+table standings {
+  id int
+  team_id int
+  player_id int
+  table_name text
+  record_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: standings.team_id > teams.id
+ref: standings.player_id > players.id
+
+table tags {
+  id int
+  name text
+  table_name text
+  record_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+table posts {
+  id int
+  title text
+  body text
+  user_id int
+  status text
+  published_at timestamp
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: posts.user_id > users.id
+
+table comments {
+  id int
+  body text
+  user_id int
+  post_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: comments.user_id > users.id
+ref: comments.post_id > posts.id
+
 table logs {
   id int
   message text
