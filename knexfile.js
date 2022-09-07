@@ -24,7 +24,6 @@ export default {
       tableName: 'knex_migrations'
     }
   },
-
   production: {
     client: 'postgresql',
     connection: {
@@ -41,5 +40,4 @@ export default {
       tableName: 'knex_migrations'
     }
   }
-
 };
