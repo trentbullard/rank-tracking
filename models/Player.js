@@ -5,6 +5,16 @@ class Player extends Model {
     return 'players';
   };
 
+  $beforeInsert() {
+    const ts = new Date().toISOString();
+    this.created_at = ts;
+    this.updated_at = ts;
+  };
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
+  };
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -15,9 +25,6 @@ class Player extends Model {
         last_name: { type: 'string' },
         designator: { type: 'string' },
         user_id: { type: 'integer' },
-        deleted_at: { type: 'timestamp' },
-        created_at: { type: 'timestamp' },
-        updated_at: { type: 'timestamp' },
       }
     };
   };

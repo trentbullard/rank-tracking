@@ -1,8 +1,21 @@
 import { Model } from 'objection';
 
+import Player from './Player.js';
+// import League from './League.js';
+
 class User extends Model {
   static get tableName() {
     return 'users';
+  };
+
+  $beforeInsert() {
+    const ts = new Date().toISOString();
+    this.created_at = ts;
+    this.updated_at = ts;
+  };
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
   };
 
   static get jsonSchema() {
@@ -18,17 +31,11 @@ class User extends Model {
         last_name: { type: 'string' },
         is_admin: { type: 'boolean' },
         session_id: { type: 'string' },
-        deleted_at: { type: 'timestamp' },
-        created_at: { type: 'timestamp' },
-        updated_at: { type: 'timestamp' },
       }
     };
   };
 
   static get relationMappings() {
-    const Player = require('./Player').default;
-    const League = require('./League').default;
-
     return {
       players: {
         relation: Model.HasManyRelation,
@@ -38,14 +45,14 @@ class User extends Model {
           to: 'players.user_id'
         }
       },
-      leagues: {
-        relation: Model.HasManyRelation,
-        modelClass: League,
-        join: {
-          from: 'users.id',
-          to: 'leagues.owner_id'
-        }
-      },
+      // leagues: {
+      //   relation: Model.HasManyRelation,
+      //   modelClass: League,
+      //   join: {
+      //     from: 'users.id',
+      //     to: 'leagues.owner_id'
+      //   }
+      // },
     };
   };
 };
