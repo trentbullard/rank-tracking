@@ -6,7 +6,7 @@ const up = (knex) => {
   return knex.schema.createTable('users', (table) => {
     table.increments('id').primary();
     table.text('email').notNullable();
-    table.string('password').notNullable();
+    table.string('password_hash').notNullable();
     table.string('username');
     table.string('first_name');
     table.string('last_name');
