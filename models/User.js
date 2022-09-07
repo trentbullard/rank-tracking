@@ -1,12 +1,8 @@
 import { Model } from 'objection';
 
-export default class User extends Model {
+class User extends Model {
   static get tableName() {
     return 'users';
-  };
-
-  static get idColumn() {
-    return 'id';
   };
 
   static get jsonSchema() {
@@ -53,3 +49,5 @@ export default class User extends Model {
     };
   };
 };
+
+export default User;
