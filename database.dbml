@@ -1,0 +1,173 @@
+table users {
+  id int
+  email text
+  password_hash text
+  username text
+  first_name text
+  last_name text
+  is_admin boolean
+  session_id text
+  created_at timestamp
+  deleted_at timestamp
+}
+
+table players {
+  id int
+  first_name text
+  last_name text
+  designator text
+  user_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: players.user_id > users.id
+
+table sports {
+  id int
+  name text
+  created_at timestamp
+  deleted_at timestamp
+}
+
+table positions {
+  id int
+  name text
+  created_at timestamp
+  deleted_at timestamp
+}
+
+table objectives {
+  id int
+  name text
+  value int
+  sport_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: objectives.sport_id > sports.id
+
+table leagues {
+  id int
+  name text
+  format text
+  status text
+  owner_id int
+  sport_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: leagues.owner_id > users.id
+ref: leagues.sport_id > sports.id
+
+table seasons {
+  id int
+  name text
+  format text
+  status text
+  start_date timestamp
+  end_date timestamp
+  league_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: seasons.league_id > leagues.id
+
+table teams {
+  id int
+  name text
+  league_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: teams.league_id > leagues.id
+
+table matches {
+  id int
+  name text
+  status text
+  season_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: matches.season_id > seasons.id
+
+table sets {
+  id int
+  name text
+  status text
+  season_id int
+  match_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: sets.season_id > seasons.id
+ref: sets.match_id > matches.id
+
+table games {
+  id int
+  name text
+  status text
+  season_id int
+  match_id int
+  set_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: games.season_id > seasons.id
+ref: games.match_id > matches.id
+ref: games.set_id > sets.id
+
+table team_players {
+  id int
+  team_id int
+  player_id int
+  position_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: team_players.team_id > teams.id
+ref: team_players.player_id > players.id
+ref: team_players.position_id > positions.id
+
+table game_teams {
+  id int
+  game_id int
+  team_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: game_teams.game_id > games.id
+ref: game_teams.team_id > teams.id
+
+table player_objectives {
+  id int
+  player_id int
+  objective_id int
+  game_id int
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: player_objectives.player_id > players.id
+ref: player_objectives.objective_id > objectives.id
+ref: player_objectives.game_id > games.id
+
+table logs {
+  id int
+  message text
+  user_id int
+  table_name text
+  record_id int
+  created_at timestamp
+  deleted_at timestamp
+}
