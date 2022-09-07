@@ -15,5 +15,8 @@
     "objection": "^3.0.1",
     "pg": "^8.8.0"
   },
+  "scripts": {
+    "knex": "knex"
+  },
   "type": "module"
 }
