@@ -46,7 +46,7 @@ class Log extends Model {
 
   static get relationMappings() {
     return {
-      user: {
+      actor: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
@@ -54,7 +54,7 @@ class Log extends Model {
           to: 'users.id',
         },
       },
-      user_logs: {
+      user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         filter(builder) {
