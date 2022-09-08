@@ -4,30 +4,33 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import Knex from 'knex';
+import knexConfig from './knexfile.js';
+import { Model } from 'objection';
+const knex = Knex(knexConfig.development);
+Model.knex(knex);
+
+import router from './routes/index.js';
+
+import middleware from './middleware/index.js';
+
 const app = express();
 const port = process.env.PORT || 3002;
-
-const log = ({ method, url, params, query, body }) => {
-  console.log(`\n[${new Date().toISOString()}]`);
-  console.log(`Request: ${method} - ${url}`);
-  console.log(`  params: `, params);
-  console.log(`  query: `, query);
-  console.log(`  body: `, body);
-};
-
-const processRequest = (req, res) => {
-  log(req);
-  return true;
-}
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  if (processRequest(req, res)) {
-    res.json({ info: 'Node.js, Express, and Postgres API' });
-  }
+app.use(middleware.log);
+
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  console.error(err.message, err.stack);
+  res.status(status).json({ message: err.message });
 });
+
+app.get('/', (req, res) => res.json({ message: 'ok' }));
+
+app.use('/users', router.users);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
