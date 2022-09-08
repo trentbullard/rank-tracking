@@ -1,4 +1,9 @@
 import { Model } from 'objection';
+import Team from './Team.js';
+import Objective from './Objective.js';
+import Standing from './Standing.js';
+import Log from './Log.js';
+import Tag from './Tag.js';
 
 class Player extends Model {
   static get tableName() {
@@ -18,23 +23,18 @@ class Player extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['first_name', 'last_name'],
+      required: ['first_name', 'last_name', 'designator'],
       properties: {
         id: { type: 'integer' },
         first_name: { type: 'string' },
         last_name: { type: 'string' },
-        designator: { type: 'string' },
+        designator: { type: 'string', minLength: 1, maxLength: 255 },
         user_id: { type: 'integer' },
-      }
+      },
     };
   };
 
   static get relationMappings() {
-    const User = require('./User').default;
-    const Team = require('./Team').default;
-    const Standing = require('./Standing').default;
-    const Objective = require('./Objective').default;
-
     return {
       user: {
         relation: Model.BelongsToOneRelation,
@@ -56,14 +56,6 @@ class Player extends Model {
           to: 'teams.id',
         },
       },
-      standings: {
-        relation: Model.HasManyRelation,
-        modelClass: Standing,
-        join: {
-          from: 'players.id',
-          to: 'standings.player_id',
-        },
-      },
       objectives: {
         relation: Model.ManyToManyRelation,
         modelClass: Objective,
@@ -74,6 +66,52 @@ class Player extends Model {
             to: 'player_objectives.objective_id',
           },
           to: 'objectives.id',
+        },
+      },
+      standings: {
+        relation: Model.HasManyRelation,
+        modelClass: Standing,
+        filter(builder) {
+          builder.where('rankable_type', 'players');
+        },
+        beforeInsert(model) {
+          model.rankable_type = 'players';
+        },
+        join: {
+          from: 'players.id',
+          to: 'standings.rankable_id',
+        },
+      },
+      logs: {
+        relation: Model.HasManyRelation,
+        modelClass: Log,
+        filter(builder) {
+          builder.where('loggable_type', 'players');
+        },
+        beforeInsert(model) {
+          model.loggable_type = 'players';
+        },
+        join: {
+          from: 'players.id',
+          to: 'logs.loggable_id',
+        },
+      },
+      tags: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Tag,
+        filter(builder) {
+          builder.where('taggable_type', 'players');
+        },
+        beforeInsert(model) {
+          model.taggable_type = 'players';
+        },
+        join: {
+          from: 'players.id',
+          through: {
+            from: 'taggable_tags.taggable_id',
+            to: 'taggable_tags.tag_id',
+          },
+          to: 'tags.id',
         },
       },
     };
