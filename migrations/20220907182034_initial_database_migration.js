@@ -129,6 +129,8 @@ const up = (knex) => {
     table.integer('rankable_id').notNullable();
     table.string('contest_type').notNullable(); // league, season, match, set, game
     table.integer('contest_id').notNullable();
+    table.integer('rank').notNullable();
+    table.integer('points').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
     table.unique(['rankable_type', 'rankable_id', 'contest_type', 'contest_id']);
