@@ -5,13 +5,13 @@
 const up = (knex) => {
   return knex.schema.createTable('users', (table) => {
     table.increments('id').primary();
-    table.text('email').notNullable();
+    table.string('email').unique().notNullable();
     table.string('password_hash').notNullable();
-    table.string('username');
+    table.string('username').unique();
     table.string('first_name');
     table.string('last_name');
     table.boolean('is_admin').defaultTo(false);
-    table.string('session_id');
+    table.string('session_id').unique();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
@@ -23,22 +23,23 @@ const up = (knex) => {
     table.integer('user_id').references('users.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+    table.unique(['first_name', 'last_name', 'designator']);
   })
   .createTable('sports', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
+    table.string('name').unique().notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
   .createTable('positions', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
+    table.string('name').unique().notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
   .createTable('objectives', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
+    table.string('name').unique().notNullable();
     table.integer('value').notNullable();
     table.integer('sport_id').references('sports.id');
     table.timestamp('deleted_at');
@@ -74,7 +75,8 @@ const up = (knex) => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('status').notNullable().defaultTo('active');
-    table.integer('season_id').references('seasons.id');
+    table.string('collection_type').notNullable(); // league, season
+    table.integer('collection_id').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
@@ -82,8 +84,8 @@ const up = (knex) => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('status').notNullable().defaultTo('active');
-    table.integer('season_id').references('seasons.id');
-    table.integer('match_id').references('matches.id');
+    table.string('collection_type').notNullable(); // league, season, match
+    table.integer('collection_id').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
@@ -91,9 +93,8 @@ const up = (knex) => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('status').notNullable().defaultTo('active');
-    table.integer('season_id').references('seasons.id');
-    table.integer('match_id').references('matches.id');
-    table.integer('set_id').references('sets.id');
+    table.string('collection_type').notNullable(); // league, season, match, set
+    table.integer('collection_id').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
@@ -104,6 +105,7 @@ const up = (knex) => {
     table.integer('position_id').references('positions.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+    table.unique(['team_id', 'player_id', 'position_id']);
   })
   .createTable('game_teams', (table) => {
     table.increments('id').primary();
@@ -111,6 +113,7 @@ const up = (knex) => {
     table.integer('team_id').references('teams.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+    table.unique(['game_id', 'team_id']);
   })
   .createTable('player_objectives', (table) => {
     table.increments('id').primary();
@@ -122,18 +125,19 @@ const up = (knex) => {
   })
   .createTable('standings', (table) => {
     table.increments('id').primary();
-    table.integer('team_id').references('teams.id');
-    table.integer('player_id').references('players.id');
-    table.string('table_name').notNullable();
-    table.integer('record_id').notNullable();
+    table.integer('rankable_type').notNullable(); // team or player
+    table.integer('rankable_id').notNullable();
+    table.string('contest_type').notNullable(); // league, season, match, set, game
+    table.integer('contest_id').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+    table.unique(['rankable_type', 'rankable_id', 'contest_type', 'contest_id']);
   })
   .createTable('logs', (table) => {
     table.increments('id').primary();
     table.text('message').notNullable();
-    table.string('table_name').notNullable();
-    table.integer('record_id').notNullable();
+    table.string('loggable_type').notNullable();
+    table.integer('loggable_id').notNullable();
     table.integer('user_id').references('users.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
@@ -141,10 +145,17 @@ const up = (knex) => {
   .createTable('tags', (table) => {
     table.increments('id').primary();
     table.string('name').notNullable();
-    table.string('table_name').notNullable();
-    table.integer('record_id').notNullable();
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+  })
+  .createTable('taggable_tags', (table) => {
+    table.increments('id').primary();
+    table.integer('tag_id').references('tags.id');
+    table.integer('taggable_id').notNullable();
+    table.string('taggable_type').notNullable();
+    table.timestamp('deleted_at');
+    table.timestamps(true, true);
+    table.unique(['tag_id', 'taggable_id', 'taggable_type']);
   })
   .createTable('posts', (table) => {
     table.increments('id').primary();
