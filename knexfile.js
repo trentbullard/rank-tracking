@@ -12,7 +12,6 @@ export default {
     client: 'postgresql',
     connection: {
       database: process.env.DB_NAME,
-      schema: process.env.DB_SCHEMA,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
     },
@@ -21,14 +20,13 @@ export default {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   },
   production: {
     client: 'postgresql',
     connection: {
       database: process.env.DB_NAME,
-      schema: process.env.DB_SCHEMA,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
     },
@@ -37,7 +35,7 @@ export default {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   }
 };
