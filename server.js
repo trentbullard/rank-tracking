@@ -23,14 +23,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(middleware.log);
 
+app.get('/', (req, res) => res.json({ message: 'ok' }));
+
+app.use('/users', router.users);
+
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   console.error(err.message, err.stack);
   res.status(status).json({ message: err.message });
 });
 
-app.get('/', (req, res) => res.json({ message: 'ok' }));
-
-app.use('/users', router.users);
+app.use(middleware.error404);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
