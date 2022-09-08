@@ -11,7 +11,6 @@ const knex = Knex(knexConfig.development);
 Model.knex(knex);
 
 import router from './routes/index.js';
-
 import middleware from './middleware/index.js';
 
 const app = express();
