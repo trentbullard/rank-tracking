@@ -191,7 +191,6 @@ const up = (knex) => {
     .dropTableIfExists('tags')
     .dropTableIfExists('posts')
     .dropTableIfExists('comments')
-    .dropTableIfExists('attachments');
 };
 
 export { up, down };
