@@ -1,8 +1,14 @@
+import _ from 'lodash';
 import User from '../models/User.js';
 
-export const get = async (req, res, next) => {
+export const get = async ({ query }, res, next) => {
   try {
-    const users = await User.query();
+    let users = {};
+    if (_.isEmpty(query)) {
+      users = await User.query();
+    } else {
+      users = await User.query().where(query);
+    };
     res.json(users);
   } catch (err) {
     console.error(`controllers/users.js ~ get ~ error getting users`, err.message);
