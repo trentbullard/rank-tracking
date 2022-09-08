@@ -46,7 +46,7 @@ const fadeInUp = {
 };
 
 const LoginForm = () => {
-  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [remember, setRemember] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -58,7 +58,7 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     setLoading(true);
-    setCurrentUser({ username, remember });
+    setCurrentUser({ email, remember });
     navigate("/", { replace: true });
   };
 
@@ -84,23 +84,23 @@ const LoginForm = () => {
             animate={animate}
           >
             <TextField
-              label="Username"
-              name="username"
-              value={username}
+              label="Email"
+              name="email"
+              value={email}
               fullWidth
               onChange={e => {
-                setUsername(e.target.value);
+                setEmail(e.target.value);
                 if (!_.isNull(e.target.value) && !_.isEmpty(e.target.value.trim())) {
-                  setError({ ...error, username: null });
+                  setError({ ...error, email: null });
                 };
               }}
               onBlur={() => {
-                if (_.isNull(username) || _.isEmpty(username.trim())) {
-                  setError({ ...error, username: 'Username is required' });
+                if (_.isNull(email) || _.isEmpty(email.trim())) {
+                  setError({ ...error, email: 'Email is required' });
                 };
               }}
-              error={!!error.username}
-              helperText={error.username}
+              error={!!error.email}
+              helperText={error.email}
             />
             <TextField
               label="Password"
@@ -169,7 +169,7 @@ const LoginForm = () => {
             variant="contained"
             loading={loading}
             onClick={onSubmit}
-            disabled={loading || username.length < 1 || password.length < 1}
+            disabled={loading || email.length < 1 || password.length < 1}
           >
             {loading ? 'Loading...' : 'Login'}
           </LoadingButton>
