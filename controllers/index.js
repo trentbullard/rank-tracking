@@ -1,1 +1,4 @@
-export * as usersController from './users.js';
+import * as users from './users.js';
+export default {
+  users
+};

@@ -1,8 +1,7 @@
-export default ({ method, url, params, query, body }, _, next) => {
+export default ({ method, url, params, query, body }, res, next) => {
   console.log(`\n[${new Date().toISOString()}]`);
   console.log(`Request: ${method} - ${url}`);
-  console.log(`  params: `, params);
-  console.log(`  query: `, query);
-  console.log(`  body: `, body);
+  const output = JSON.stringify({ params, query, body }, null, 2);
+  console.log(output);
   next();
 };
