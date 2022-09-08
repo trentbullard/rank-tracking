@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(middleware.log);
+app.use(middleware.auth);
 
 app.get('/', (req, res) => res.json({ message: 'ok' }));
 
