@@ -6,7 +6,8 @@ export const getAuth = async (req, res, next) => {
   const data = req.query.data;
   try {
     const {email, passwordHash: password_hash} = JSON.parse(decrypt(data));
-    const user = await User.query().where({email, password_hash});
+    const user = await User.query().where({email, password_hash}).first();
+    delete user.password_hash;
     res.json(user);
   } catch (err) {
     next(err);
