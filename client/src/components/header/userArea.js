@@ -43,8 +43,8 @@ const AuthenticatedUserArea = _props => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    logout();
     handleClose();
+    logout();
     navigate("./login", { replace: true });
   };
   

@@ -28,10 +28,10 @@ app.get('/', (req, res) => res.json({ message: 'ok' }));
 app.use('/users', router.users);
 app.use('/auth', router.auth);
 
-app.use((err, req, res, next) => {
-  const status = err.status || 500;
-  console.error(err.message, err.stack);
-  res.status(status).json({ message: err.message });
+app.use((error, req, res, next) => {
+  const status = error.status || 500;
+  console.error(error.message, error.stack);
+  res.status(status).json({ error: 'something went wrong' });
 });
 
 app.use(middleware.error404);
