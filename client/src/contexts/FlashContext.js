@@ -1,25 +1,25 @@
 import * as React from 'react';
 
 export const FlashContext = React.createContext({
-  flash: [],
-  setFlash: () => {},
+  flashList: [],
+  setFlashList: () => {},
 });
 
 export const FlashProvider = ({ children }) => {
-  const [flash, setFlash] = React.useState([]);
+  const [flashList, setFlashList] = React.useState([]);
 
-  const addFlash = message => {
-    setFlash([...flash, message]);
+  const addFlash = (message, type) => {
+    setFlashList([...flashList, {message, type}]);
   };
 
   const removeFlash = index => {
-    const newFlash = [...flash];
-    newFlash.splice(index, 1);
-    setFlash(newFlash);
+    const newFlashList = [...flashList];
+    newFlashList.splice(index, 1);
+    setFlashList(newFlashList);
   };
 
   const state = {
-    flash,
+    flashList,
     addFlash,
     removeFlash,
   };

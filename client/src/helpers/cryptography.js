@@ -1,6 +1,11 @@
 import CryptoJS from 'crypto-js';
 const secret = process.env.SECRET || 'wrong';
 
+/**
+ * Encrypts the given input using AES-256-CBC and returns an encrypted string.
+ * @param {object} data any type that can be stringified
+ * @returns {string} encrypted string
+ */
 export const encrypt = data => {
   const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString();
   return ciphertext;
@@ -16,6 +21,11 @@ export const digest = input => {
   return CryptoJS.HmacSHA512(thisMinute + input, secret).toString();
 };
 
-export const hash = password => {
-  return CryptoJS.SHA3(password).toString();
+/**
+ * Takes an input string and returns a SHA3 hash
+ * @param {string} input 
+ * @returns {string} hash
+ */
+export const hash = input => {
+  return CryptoJS.SHA3(input).toString();
 };
