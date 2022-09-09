@@ -1,18 +1,15 @@
-import CryptoJS from 'crypto-js';
+import { digest } from '../helpers/cryptography.js';
+import { getThisAndLastMinute } from '../helpers/chronography.js';
 
 export default ({ method, _parsedUrl: { pathname }, headers: { authorization } }, res, next) => {
   const [type, token] = authorization.split(' ');
-  const lcMethod = method.toLowerCase();
-  const secret = process.env.SECRET || 'wrong';
-  const thisMinute = new Date().toISOString().slice(0, 16);
-  const thisMinuteString = thisMinute + lcMethod + pathname.toString();
-  const thisMinuteHash = CryptoJS.HmacSHA512(thisMinuteString, secret).toString();
-  const lastMinute = new Date(new Date() - 60000).toISOString().slice(0, 16);
-  const lastMinuteString = lastMinute + lcMethod + pathname.toString();
-  const lastMinuteHash = CryptoJS.HmacSHA512(lastMinuteString, secret).toString();
+  const [thisMinute, lastMinute] = getThisAndLastMinute();
+  const thisMinuteHash = digest(thisMinute + method + pathname);
+  const lastMinuteHash = digest(lastMinute + method + pathname);
   if (type === 'Bearer' && (token === thisMinuteHash || token === lastMinuteHash)) {
     next();
   } else {
     res.status(401).json({ error: 'not authorized' });
+    return;
   };
 };

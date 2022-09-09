@@ -26,6 +26,7 @@ app.use(middleware.auth);
 app.get('/', (req, res) => res.json({ message: 'ok' }));
 
 app.use('/users', router.users);
+app.use('/auth', router.auth);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
