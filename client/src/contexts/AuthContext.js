@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Cookies from 'js-cookie';
 import api from '../api/api';
-import { timedDigest, encrypt, hash } from '../helpers/cryptography';
+import { timedDigest, encrypt } from '../helpers/cryptography';
 import { isFalse, isTrue } from '../helpers/boolean';
 
 const cookieName = 'MultiRankToken';
@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }) => {
         'Authorization': `Bearer ${timedDigest(`GET/auth/session`)}`,
       },
       params: {data},
-    }).then(res => {
-      setCurrentUser(res.data);
-    }).catch(error => console.log(error));
+    })
+    .then(res => {setCurrentUser(res.data);})
+    .catch(error => setSession(null));
   };
 
   React.useEffect(() => {
