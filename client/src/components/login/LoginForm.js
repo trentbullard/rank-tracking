@@ -19,7 +19,7 @@ import { motion } from 'framer-motion';
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
 import api from '../../api/api';
-import { digest, encrypt, hash } from '../../helpers/cryptography';
+import { timedDigest, hash } from '../../helpers/cryptography';
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -55,33 +55,21 @@ const LoginForm = () => {
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState({});
-  const {setCurrentUser, referrer} = React.useContext(AuthContext);
+  const {localAuth, referrer} = React.useContext(AuthContext);
   const { addFlash } = React.useContext(FlashContext);
   const navigate = useNavigate();
 
-  const onSubmit = async e => {
+  const onSubmit = e => {
     e.preventDefault();
     setLoading(true);
     const passwordHash = hash(password);
-    const sessionId = digest(password);
+    const sessionId = timedDigest(password);
     const authData = {email, passwordHash, sessionId, remember};
-    const data = encrypt(JSON.stringify(authData));
-    try {
-      const {
-        data: user,
-      } = await api.get('/auth', {
-        headers: {
-          'Authorization': `Bearer ${digest(`GET/auth`)}`,
-        },
-        params: {data},
-      });
-      setCurrentUser({...user, sessionId, remember});
+    localAuth(authData).then(_res => {
       navigate(referrer, {replace: true});
-    } catch (error) {
+    }).catch(error => {
       addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');
-    } finally {
-      setLoading(false);
-    };
+    }).finally(() => setLoading(false));
   };
 
   return (

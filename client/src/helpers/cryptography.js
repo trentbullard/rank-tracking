@@ -16,7 +16,7 @@ export const encrypt = data => {
  * @param {string} input
  * @returns {string} digest
  */
-export const digest = input => {
+export const timedDigest = input => {
   const thisMinute = new Date().toISOString().slice(0, 16);
   return CryptoJS.HmacSHA512(thisMinute + input, secret).toString();
 };

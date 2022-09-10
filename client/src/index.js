@@ -17,11 +17,12 @@ import Login from './pages/Login';
 import LeagueDetails from './pages/league/LeagueDetails';
 import NewLeague from './pages/league/NewLeague';
 import NotFound from './components/utility/404';
+import { isTrue } from './helpers/object';
 
 const AuthComponent = ({ element, noAuth }) => {
-  const { currentUser } = React.useContext(AuthContext);
-  const redirectTo = !!noAuth ? "/" : "/login";
-  return (!!noAuth !== !!currentUser) ? element : <Navigate to={redirectTo} replace />;
+  const { session } = React.useContext(AuthContext);
+  const redirectTo = isTrue(noAuth) ? "/" : "/login";
+  return (isTrue(noAuth) !== isTrue(session)) ? element : <Navigate to={redirectTo} replace />;
 };
   
 const root = ReactDOM.createRoot(document.getElementById('root'));
