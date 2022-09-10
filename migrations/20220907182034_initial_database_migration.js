@@ -139,6 +139,8 @@ const up = (knex) => {
   .createTable('logs', (table) => {
     table.increments('id').primary();
     table.text('message').notNullable();
+    table.string('level').notNullable();
+    table.string('action').notNullable();
     table.string('loggable_type').notNullable();
     table.integer('loggable_id').notNullable();
     table.integer('user_id').references('users.id');
