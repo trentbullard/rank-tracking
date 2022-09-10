@@ -18,7 +18,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { motion } from 'framer-motion';
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
-import api from '../../api/api';
 import { timedDigest, hash } from '../../helpers/cryptography';
 
 let easing = [0.6, -0.05, 0.01, 0.99];
