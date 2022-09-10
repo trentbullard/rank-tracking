@@ -33,6 +33,7 @@ export const socialLogin = async (req, res, next) => {
       delete user.session_id;
       res.json(newUser);
     } else {
+      await User.query().patch({session_id}).where({id: user.id});
       delete user.password_hash;
       delete user.session_id;
       res.json(user);
