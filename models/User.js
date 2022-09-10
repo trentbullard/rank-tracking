@@ -21,7 +21,7 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['email', 'password_hash'],
+      required: ['email'],
       properties: {
         id: { type: 'integer' },
         email: { type: 'string', minLength: 1, maxLength: 255 },
