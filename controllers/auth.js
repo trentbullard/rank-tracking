@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import User from '../models/User.js';
+import Log from '../models/Log.js';
 import { decrypt } from '../helpers/cryptography.js';
 
 export const getAuth = async (req, res, next) => {
@@ -23,10 +24,13 @@ export const getAuth = async (req, res, next) => {
 export const socialLogin = async (req, res, next) => {
   const data = req.body.params.data;
   try {
-    const {email, first_name, last_name, username, password_hash, session_id} = JSON.parse(decrypt(data));
+    const {email, first_name, last_name, username, session_id} = JSON.parse(decrypt(data));
     const user = await User.query().where({email}).first();
     if (!user) {
-      const newUser = await User.query().insert({email, first_name, last_name, username, password_hash, session_id});
+      const newUser = await User.query().insert({email, first_name, last_name, username, session_id});
+      await Log.query().insert({user_id: newUser.id, action: 'create', level: 'info', loggable_type: 'users', loggable_id: newUser.id});
+      delete user.password_hash;
+      delete user.session_id;
       res.json(newUser);
     } else {
       delete user.password_hash;
@@ -44,7 +48,7 @@ export const getSession = async (req, res, next) => {
     const session = decrypt(data);
     const user = await User.query().where({session_id: session}).first();
     if (!user) {
-      res.json(null);
+      res.status(401).json({error: 'incorrect session'});
     } else {
       delete user.password_hash;
       delete user.session_id;
