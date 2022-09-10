@@ -6,12 +6,13 @@ const up = (knex) => {
   return knex.schema.createTable('users', (table) => {
     table.increments('id').primary();
     table.string('email').unique().notNullable();
-    table.string('password_hash').notNullable();
+    table.string('password_hash');
     table.string('username').unique();
     table.string('first_name');
     table.string('last_name');
     table.boolean('is_admin').defaultTo(false);
     table.string('session_id').unique();
+    table.string('avatar_url');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
