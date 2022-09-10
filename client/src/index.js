@@ -17,7 +17,7 @@ import Login from './pages/Login';
 import LeagueDetails from './pages/league/LeagueDetails';
 import NewLeague from './pages/league/NewLeague';
 import NotFound from './components/utility/404';
-import { isTrue } from './helpers/object';
+import { isTrue } from './helpers/boolean';
 
 const AuthComponent = ({ element, noAuth }) => {
   const { session } = React.useContext(AuthContext);

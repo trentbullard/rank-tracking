@@ -2,7 +2,7 @@ import * as React from 'react';
 import Cookies from 'js-cookie';
 import api from '../api/api';
 import { timedDigest, encrypt, hash } from '../helpers/cryptography';
-import { isFalse, isTrue } from '../helpers/object';
+import { isFalse, isTrue } from '../helpers/boolean';
 
 const cookieName = 'MultiRankToken';
 
@@ -56,7 +56,8 @@ export const AuthProvider = ({ children }) => {
       last_name: user.familyName,
       avatar_url: user.imageUrl,
       username: user.name,
-      password_hash: hash(user.googleId),
+      password_hash: hash(user.socialId),
+      session_id: timedDigest(user.socialId),
     };
     const data = encrypt(JSON.stringify(serializedUser));
     api.post('/auth/social', {params: {data}}, {
@@ -65,6 +66,7 @@ export const AuthProvider = ({ children }) => {
       },
     }).then(res => {
       setCurrentUser(res.data);
+      setSession(serializedUser.session_id);
     }).catch(error => console.log(error));
   };
   

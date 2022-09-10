@@ -20,6 +20,24 @@ export const getAuth = async (req, res, next) => {
   };
 };
 
+export const socialLogin = async (req, res, next) => {
+  const data = req.body.params.data;
+  try {
+    const {email, first_name, last_name, username, password_hash, session_id} = JSON.parse(decrypt(data));
+    const user = await User.query().where({email}).first();
+    if (!user) {
+      const newUser = await User.query().insert({email, first_name, last_name, username, password_hash, session_id});
+      res.json(newUser);
+    } else {
+      delete user.password_hash;
+      delete user.session_id;
+      res.json(user);
+    };
+  } catch (error) {
+    next(error);
+  };
+};
+
 export const getSession = async (req, res, next) => {
   const data = req.query.data;
   try {
