@@ -48,7 +48,7 @@ const Login = () => {
         </Typography>
       </HeadingStyle>
 
-      <Box component={motion.div} {...fadeInUp}>
+      <Box component={motion.div} {...fadeInUp} display="flex" justifyContent="center" alignItems="center" flexDirection="row">
         <SocialAuth />
       </Box>
 
