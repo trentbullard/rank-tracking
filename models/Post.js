@@ -27,7 +27,7 @@ class Post extends Model {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
         title: { type: 'string', minLength: 1, maxLength: 255 },
-        body: { type: 'text', minLength: 1 },
+        body: { type: 'string', minLength: 1 },
         status: { type: 'string', minLength: 1, maxLength: 255 },
       },
     };

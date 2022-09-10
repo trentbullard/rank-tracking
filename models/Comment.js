@@ -27,7 +27,7 @@ class Comment extends Model {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
         post_id: { type: 'integer' },
-        body: { type: 'text', minLength: 1 },
+        body: { type: 'string', minLength: 1 },
       },
     };
   };

@@ -37,7 +37,7 @@ class Log extends Model {
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
-        message: { type: 'text', minLength: 1 },
+        message: { type: 'string', minLength: 1 },
         loggable_id: { type: 'integer' },
         loggable_type: { type: 'string' },
       },
