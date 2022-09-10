@@ -1,13 +1,16 @@
+import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Divider, Link, Paper, Stack, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 
+import { AuthContext } from '../contexts/AuthContext';
 import { TitlePageLayout } from '../components/layouts';
 import { icons } from '../img/icons';
 
 const Home = () => {
+  const { currentUser } = React.useContext(AuthContext);
+  const name = currentUser?.first_name || currentUser?.username || currentUser?.email;
   const imgSize = "100%";
-  const currentUser = 'trent';
 
   const StyledLink = styled(Link)({
     color: 'text.primary',
@@ -15,7 +18,7 @@ const Home = () => {
   });
   
   return (
-    <TitlePageLayout title={`${currentUser}'s Dashboard`}>
+    <TitlePageLayout title={`${name}'s Dashboard`}>
       <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="column" sx={{ width: "100%", gap: "2rem" }}>
         <Stack
           direction="row"
