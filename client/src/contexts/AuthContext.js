@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }) => {
       last_name: user.familyName,
       avatar_url: user.imageUrl,
       username: user.name,
-      password_hash: hash(user.socialId),
       session_id: timedDigest(user.socialId),
     };
     const data = encrypt(JSON.stringify(serializedUser));
