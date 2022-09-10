@@ -6,11 +6,9 @@ import Header from './header/Header';
 import Snackbar from './utility/Snackbar';
 
 const App = () => {
-  const currentUser = 'trent';
-
   return (
     <Container>
-      <Header currentUser={currentUser} />
+      <Header />
       <Snackbar />
       <Outlet />
     </Container>
