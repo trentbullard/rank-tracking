@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import * as React from 'react';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Stack, IconButton } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -23,11 +24,28 @@ const SocialAuth = () => {
       addFlash('error', 'Google login failed');
     };
   };
+
+  const responseFacebook = response => {
+    if (isTrue(response)) {
+      const [givenName, familyName] = _.get(response, 'name', '').split(' ');
+      const serializedUser = {
+        email: response.email,
+        givenName,
+        familyName,
+        imageUrl: response.picture.data.url,
+        name: response.name,
+        socialId: response.id,
+      };
+      socialAuth(serializedUser);
+    } else {
+      addFlash('error', 'Facebook login failed');
+    };
+  };
   
   return (
     <Stack spacing={2} direction="row">
       <GoogleLogin
-        clientId="955609240865-lss719dqtftho8gjb0v8u36p9tcb1r0k.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={renderProps => (
           <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} variant="outlined" sx={{ flex: 1 }}>
             <GoogleIcon sx={{ color: "#DF3E30", fontSize: iconHeight }} />
@@ -38,9 +56,16 @@ const SocialAuth = () => {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
       />
-      <IconButton variant="outlined" sx={{ flex: 1 }}>
-        <FacebookIcon sx={{ color: "#1877F2", fontSize: iconHeight }} />
-      </IconButton>
+      <FacebookLogin
+        appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
+        fields="name,email,picture"
+        callback={responseFacebook}
+        render={renderProps => (
+          <IconButton onClick={renderProps.onClick} variant="outlined" sx={{ flex: 1 }}>
+            <FacebookIcon sx={{ color: "#1877F2", fontSize: iconHeight }} />
+          </IconButton>
+        )}
+      />
       <IconButton variant="outlined" sx={{ flex: 1 }} >
         <TwitterIcon sx={{ color: "#1C9CEA", fontSize: iconHeight }} />
       </IconButton>
