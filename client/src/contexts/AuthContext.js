@@ -77,18 +77,8 @@ export const AuthProvider = ({ children }) => {
 
   const state = {
     currentUser,
-    setCurrentUser: user => {
-      setCurrentUser(user);
-      if (user.remember) {
-        Cookies.set(cookieName, user.sessionId, { expires: 7 });
-      } else {
-        Cookies.remove(cookieName);
-      }
-    },
     session,
-    setSession,
     referrer,
-    setReferrer,
     logout,
     localAuth,
     socialAuth,
