@@ -33,11 +33,13 @@ class Log extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['user_id', 'loggable_id', 'loggable_type', 'message'],
+      required: ['user_id', 'loggable_id', 'loggable_type', 'action'],
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
+        action: { type: 'string', minLength: 1 },
         message: { type: 'string', minLength: 1 },
+        level: { type: 'string', minLength: 1 },
         loggable_id: { type: 'integer' },
         loggable_type: { type: 'string' },
       },
