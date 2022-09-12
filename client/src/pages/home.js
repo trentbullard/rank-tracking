@@ -7,15 +7,36 @@ import { AuthContext } from '../contexts/AuthContext';
 import { TitlePageLayout } from '../components/layouts';
 import { icons } from '../img/icons';
 
+const StyledLink = styled(Link)({
+  color: 'text.primary',
+  textDecoration: 'none',
+});
+
+const StyledNewGameList = styled(Paper)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  flexDirection: 'column',
+  width: '100%',
+  gap: '1rem',
+  padding: '1rem',
+});
+
+const NewGameButton = ({sport}) => {
+  const imgSize = "100%";
+  return (
+    <StyledLink component={RouterLink} to={`/game/new?sport=${sport}`}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="column" sx={{ width: imgSize, height: imgSize }}>
+        <Box component="img" src={icons()[sport]} alt={`${sport}`} sx={{ height: imgSize, width: imgSize }} />
+        <Box>{sport}</Box>
+      </Box>
+    </StyledLink>
+  );
+};
+
 const Home = () => {
   const { currentUser } = React.useContext(AuthContext);
   const name = currentUser?.first_name || currentUser?.username || currentUser?.email;
-  const imgSize = "100%";
-
-  const StyledLink = styled(Link)({
-    color: 'text.primary',
-    textDecoration: 'none',
-  });
   
   return (
     <TitlePageLayout title={`${name}'s Dashboard`}>
@@ -29,36 +50,16 @@ const Home = () => {
           <StyledLink component={RouterLink} to="/teams">TEAMS</StyledLink>
           <StyledLink component={RouterLink} to="/games">GAMES</StyledLink>
         </Stack>
-        <Box
-          component={Paper}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          flexDirection="column"
-          sx={{
-            width: "100%",
-            gap: "1rem",
-            padding: "1rem",
-          }}
-        >
+        <StyledNewGameList>
           <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ width: "100%", gap: "1rem" }}>
-            <RouterLink to="/game/new?sport=foosball">
-              <Box component="img" src={icons().foosball} alt="foosball" sx={{ height: imgSize, width: imgSize }} />
-            </RouterLink>
-            <RouterLink to="/game/new?sport=cornhole">
-              <Box component="img" src={icons().cornhole} alt="cornhole" sx={{ height: imgSize, width: imgSize }} />
-            </RouterLink>
-            <RouterLink to="/game/new?sport=tabletennis">
-              <Box component="img" src={icons().tabletennis} alt="tabletennis" sx={{ height: imgSize, width: imgSize }} />
-            </RouterLink>
-            <RouterLink to="/game/new?sport=soccer">
-              <Box component="img" src={icons().soccer} alt="soccer" sx={{ height: imgSize, width: imgSize }} />
-            </RouterLink>
+            {Object.keys(icons()).map((sport) => (
+              <NewGameButton sport={sport} key={sport} />
+            ))}
           </Box>
           <Typography variant="body2">
             Select a sport to start a new game
           </Typography>
-        </Box>
+        </StyledNewGameList>
       </Box>
     </TitlePageLayout>
   );
