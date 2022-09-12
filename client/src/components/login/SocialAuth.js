@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import * as React from 'react';
 import GoogleLogin from 'react-google-login';
-import { Stack } from '@mui/material';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
@@ -21,16 +20,14 @@ const SocialAuth = () => {
   };
 
   return (
-    <Stack spacing={2} direction="row">
-      <GoogleLogin
-        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        buttonText="Login with Google"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        theme="dark"
-      />
-    </Stack>
+    <GoogleLogin
+      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+      buttonText="Login with Google"
+      onSuccess={responseGoogle}
+      onFailure={responseGoogle}
+      cookiePolicy={'single_host_origin'}
+      theme="dark"
+    />
   );
 };
 

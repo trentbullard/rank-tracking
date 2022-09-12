@@ -68,6 +68,20 @@ export const AuthProvider = ({ children }) => {
       setSession(serializedUser.session_id);
     }).catch(error => console.log(error));
   };
+
+  const signup = authData => {
+    const data = encrypt(JSON.stringify(authData));
+    const result = api.post('/auth/signup', {params: {data}}, {
+      headers: {
+        'Authorization': `Bearer ${timedDigest(`POST/auth/signup`)}`,
+      },
+    }).then(res => {
+      setCurrentUser(res.data);
+      setSession(authData.sessionId);
+      return res.data;
+    });
+    return result;
+  };
   
   const logout = () => {
     setSession(null);
@@ -82,6 +96,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     localAuth,
     socialAuth,
+    signup,
   }
   
   return (

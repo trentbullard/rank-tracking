@@ -15,10 +15,17 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
 import { timedDigest, hash } from '../../helpers/cryptography';
+
+const StyledLink = styled(Link)({
+  color: 'text.primary',
+  textDecoration: 'none',
+});
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -66,13 +73,13 @@ const LoginForm = () => {
     const authData = {email, passwordHash, sessionId, remember};
     localAuth(authData).then(_res => {
       navigate(referrer, {replace: true});
-    }).catch(error => {
-      addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');
+    }).catch(resError => {
+      addFlash(_.get(resError, 'response.data.error', 'something went wrong'), 'error');
     }).finally(() => setLoading(false));
   };
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" sx={{ width: "100%" }}>
       <form onSubmit={onSubmit}>
         <Box
           component={motion.div}
@@ -93,7 +100,7 @@ const LoginForm = () => {
             animate={animate}
           >
             <TextField
-              label="Email"
+              label="email"
               name="email"
               value={email}
               fullWidth
@@ -112,7 +119,7 @@ const LoginForm = () => {
               helperText={error.email}
             />
             <TextField
-              label="Password"
+              label="password"
               name="password"
               value={password}
               type={showPassword ? "text" : "password"}
@@ -166,9 +173,9 @@ const LoginForm = () => {
               }
               label="Remember Me"
             />
-            <Link component={RouterLink} to="#">
+            <StyledLink component={RouterLink} to="#">
               Forgot Password?
-            </Link>
+            </StyledLink>
           </Stack>
 
           <LoadingButton
@@ -180,7 +187,7 @@ const LoginForm = () => {
             onClick={onSubmit}
             disabled={loading || email.length < 1 || password.length < 1}
           >
-            {loading ? 'Loading...' : 'Login'}
+            {loading ? 'loading...' : 'login'}
           </LoadingButton>
         </Box>
       </form>
@@ -191,7 +198,7 @@ const LoginForm = () => {
         align="center"
         sx={{ mt: 3 }}
       >
-        Don't have an account? <Link component={RouterLink} to="#">Sign up</Link>
+        Don't have an account? <StyledLink component={RouterLink} to="/signup">Sign up</StyledLink>
       </Typography>
     </Box>
   );

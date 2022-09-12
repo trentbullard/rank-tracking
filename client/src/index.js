@@ -12,8 +12,9 @@ import { AuthContext } from './contexts/AuthContext';
 import FlashProvider from './contexts/FlashContext';
 import App from "./components/App";
 import Home from './pages/Home';
-import Leagues from './pages/Leagues';
+import Leagues from './pages/league/Leagues';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import LeagueDetails from './pages/league/LeagueDetails';
 import NewLeague from './pages/league/NewLeague';
 import NotFound from './components/utility/404';
@@ -40,6 +41,7 @@ root.render(
                 <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
                 <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
                 <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
+                <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
