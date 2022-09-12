@@ -40,11 +40,12 @@ const up = (knex) => {
   })
   .createTable('objectives', (table) => {
     table.increments('id').primary();
-    table.string('name').unique().notNullable();
+    table.string('name').notNullable();
     table.integer('value').notNullable();
     table.integer('sport_id').references('sports.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
+    table.unique(['name', 'sport_id']);
   })
   .createTable('leagues', (table) => {
     table.increments('id').primary();
