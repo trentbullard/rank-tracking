@@ -12,6 +12,7 @@ const SocialAuth = () => {
 
   const responseGoogle = response => {
     if (isTrue(response.error)) {
+      console.log("🚀 ~ file: SocialAuth.js ~ line 15 ~ responseGoogle ~ response.error", response.error)
       addFlash('something went wrong', 'error');
       return;
     };
