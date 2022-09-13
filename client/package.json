@@ -26,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-remote": "react-scripts build && mv build /var/www/html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
