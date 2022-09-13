@@ -11,7 +11,10 @@ const SocialAuth = () => {
   const { addFlash } = React.useContext(FlashContext);
 
   const responseGoogle = response => {
-    console.log("🚀 ~ file: SocialAuth.js ~ line 14 ~ responseGoogle ~ response", response)
+    if (isTrue(response.error)) {
+      addFlash('something went wrong', 'error');
+      return;
+    };
     const user = _.get(response, 'profileObj', null);
     if (isTrue(user)) {
       socialAuth({...user, socialId: user.googleId});
@@ -28,7 +31,7 @@ const SocialAuth = () => {
       onFailure={responseGoogle}
       cookiePolicy={'single_host_origin'}
       theme="dark"
-      auto
+      autoLoad={false}
     />
   );
 };
