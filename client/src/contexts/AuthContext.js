@@ -11,7 +11,6 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [session, setSession] = React.useState(Cookies.get(cookieName));
   const [currentUser, setCurrentUser] = React.useState(null);
-  console.log("🚀 ~ file: AuthContext.js ~ line 15 ~ AuthProvider ~ currentUser", currentUser)
   const [referrer, setReferrer] = React.useState("/");
   
   if (isFalse(currentUser) && isTrue(session)) {

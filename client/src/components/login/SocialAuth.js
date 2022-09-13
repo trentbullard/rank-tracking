@@ -15,7 +15,7 @@ const SocialAuth = () => {
     if (isTrue(user)) {
       socialAuth({...user, socialId: user.googleId});
     } else {
-      addFlash('error', 'Google login failed');
+      addFlash('google login failed', 'error');
     };
   };
 

@@ -25,7 +25,7 @@ const Snackbar = () => {
     <Stack spacing={2} sx={{ width: '100%' }}>
       {flashList.map((flash, index) => (
         <MuiSnackbar open={open} autoHideDuration={6000} onClose={(e, reason) => dismiss(index, reason)} key={`snackbar-${index}`}>
-          <Alert onClose={(e, reason) => dismiss(index, reason)} severity='error' sx={{ width: '100%' }}>
+          <Alert onClose={(e, reason) => dismiss(index, reason)} severity={flash.type} sx={{ width: '100%' }}>
             {flash.message}
           </Alert>
         </MuiSnackbar>

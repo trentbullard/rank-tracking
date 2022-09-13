@@ -74,6 +74,7 @@ const LoginForm = () => {
     localAuth(authData).then(_res => {
       navigate(referrer, {replace: true});
     }).catch(resError => {
+      console.log("🚀 ~ file: LoginForm.js ~ line 77 ~ localAuth ~ resError", resError)
       addFlash(_.get(resError, 'response.data.error', 'something went wrong'), 'error');
     }).finally(() => setLoading(false));
   };
