@@ -60,6 +60,7 @@ let lightTheme = createTheme({
   ...theme,
   palette: {
     type: 'light',
+    mode: 'light',
     primary: {
       main: '#33334b',
     },

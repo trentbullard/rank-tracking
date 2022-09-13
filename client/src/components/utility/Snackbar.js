@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Alert as MuiAlert, Snackbar as MuiSnackbar, Stack } from '@mui/material';
 import { FlashContext } from '../../contexts/FlashContext';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -25,7 +25,7 @@ const Snackbar = () => {
     <Stack spacing={2} sx={{ width: '100%' }}>
       {flashList.map((flash, index) => (
         <MuiSnackbar open={open} autoHideDuration={6000} onClose={(e, reason) => dismiss(index, reason)} key={`snackbar-${index}`}>
-          <Alert onClose={(e, reason) => dismiss(index, reason)} severity={flash.type} sx={{ width: '100%' }}>
+          <Alert onClose={(e, reason) => dismiss(index, reason)} sx={{ width: '100%' }}>
             {flash.message}
           </Alert>
         </MuiSnackbar>
