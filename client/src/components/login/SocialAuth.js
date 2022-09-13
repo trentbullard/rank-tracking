@@ -12,7 +12,7 @@ const SocialAuth = () => {
 
   const responseGoogle = response => {
     if (isTrue(response.error)) {
-      console.log("🚀 ~ file: SocialAuth.js ~ line 15 ~ responseGoogle ~ response.error", response.error)
+      console.log("🚀 ~ file: SocialAuth.js ~ line 15 ~ responseGoogle ~ response", response)
       addFlash('something went wrong', 'error');
       return;
     };
@@ -32,7 +32,6 @@ const SocialAuth = () => {
       onFailure={responseGoogle}
       cookiePolicy={'single_host_origin'}
       theme="dark"
-      autoLoad={false}
     />
   );
 };
