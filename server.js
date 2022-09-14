@@ -40,6 +40,13 @@ app.use((error, req, res, next) => {
 
 app.use(middleware.error404);
 
+console.log('port', process.env.PORT);
+console.log('secret', process.env.SECRET_KEY);
+console.log('cors', process.env.CORS_ORIGIN);
+console.log('key', process.env.SSL_KEY);
+console.log('cert', process.env.SSL_CERT);
+console.log('ca', process.env.SSL_CA);
+
 const port = process.env.PORT || 3002;
 const privateKey = fs.readFileSync(process.env.SSL_KEY, 'utf8');
 const certificate = fs.readFileSync(process.env.SSL_CERT, 'utf8');
