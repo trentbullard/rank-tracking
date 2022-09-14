@@ -16,7 +16,12 @@ import middleware from './middleware/index.js';
 const app = express();
 const port = process.env.PORT || 3002;
 
-app.use(cors());
+const origins = JSON.parse(process.env.CORS_ORIGIN)
+console.log("🚀 ~ file: server.js ~ line 20 ~ origins", origins)
+
+app.use(cors({
+  origin: origins,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
