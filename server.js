@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import https from 'https';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -14,11 +15,8 @@ import router from './routes/index.js';
 import middleware from './middleware/index.js';
 
 const app = express();
-const port = process.env.PORT || 3002;
 
 const origins = JSON.parse(process.env.CORS_ORIGIN)
-console.log("🚀 ~ file: server.js ~ line 20 ~ origins", origins)
-
 app.use(cors({
   origin: origins,
 }));
@@ -41,4 +39,7 @@ app.use((error, req, res, next) => {
 
 app.use(middleware.error404);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const port = process.env.PORT || 3002;
+https.createServer(app).listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
