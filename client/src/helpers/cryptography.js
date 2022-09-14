@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-const secret = process.env.SECRET || 'wrong';
+const secret = process.env.REACT_APP_SECRET || 'wrong';
 
 /**
  * Encrypts the given input using AES-256-CBC and returns an encrypted string.
