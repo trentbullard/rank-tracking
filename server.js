@@ -12,6 +12,13 @@ import { Model } from 'objection';
 const knex = Knex(knexConfig.development);
 Model.knex(knex);
 
+console.log('port', process.env.PORT);
+console.log('secret', process.env.SECRET_KEY);
+console.log('cors', process.env.CORS_ORIGIN);
+console.log('key', process.env.SSL_KEY);
+console.log('cert', process.env.SSL_CERT);
+console.log('ca', process.env.SSL_CA);
+
 import router from './routes/index.js';
 import middleware from './middleware/index.js';
 
@@ -39,13 +46,6 @@ app.use((error, req, res, next) => {
 });
 
 app.use(middleware.error404);
-
-console.log('port', process.env.PORT);
-console.log('secret', process.env.SECRET_KEY);
-console.log('cors', process.env.CORS_ORIGIN);
-console.log('key', process.env.SSL_KEY);
-console.log('cert', process.env.SSL_CERT);
-console.log('ca', process.env.SSL_CA);
 
 const port = process.env.PORT || 3002;
 const privateKey = fs.readFileSync(process.env.SSL_KEY, 'utf8');
