@@ -1,3 +1,4 @@
+import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -40,6 +41,10 @@ app.use((error, req, res, next) => {
 app.use(middleware.error404);
 
 const port = process.env.PORT || 3002;
-https.createServer(app).listen(port, () => {
+const privateKey = fs.readFileSync(process.env.SSL_KEY, 'utf8');
+const certificate = fs.readFileSync(process.env.SSL_CERT, 'utf8');
+const ca = fs.readFileSync(process.env.SSL_CA, 'utf8');
+const credentials = { key: privateKey, cert: certificate, ca: ca };
+https.createServer(credentials, app).listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
