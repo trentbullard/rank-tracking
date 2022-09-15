@@ -5,7 +5,9 @@ export default ({ method, _parsedUrl: { pathname }, headers: { authorization='' 
   const [type, token] = authorization.split(' ');
   const [thisMinute, lastMinute] = getThisAndLastMinute();
   const thisMinuteHash = digest(thisMinute + method + pathname);
+  console.log("🚀 ~ file: auth.js ~ line 8 ~ thisMinute + method + pathname", thisMinute + method + pathname)
   const lastMinuteHash = digest(lastMinute + method + pathname);
+  console.log("🚀 ~ file: auth.js ~ line 10 ~ lastMinute + method + pathname", lastMinute + method + pathname)
   if (type === 'Bearer' && (token === thisMinuteHash || token === lastMinuteHash)) {
     next();
   } else {
