@@ -7,6 +7,7 @@ const secret = process.env.SECRET || 'wrong';
  * @returns {string} digest
  */
 export const digest = input => {
+  console.log("🚀 ~ file: cryptography.js ~ line 11 ~ digest ~ input", input)
   return CryptoJS.HmacSHA512(input, secret).toString();
 };
 
