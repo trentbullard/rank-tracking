@@ -6,10 +6,7 @@ const secret = process.env.SECRET || 'wrong';
  * @param {string} input
  * @returns {string} digest
  */
-export const digest = input => {
-  console.log("🚀 ~ file: cryptography.js ~ line 11 ~ digest ~ input", input)
-  return CryptoJS.HmacSHA512(input, secret).toString();
-};
+export const digest = input => CryptoJS.HmacSHA512(input, secret).toString();
 
 /**
  * Returns a JSON object from an AES encrypted string.
