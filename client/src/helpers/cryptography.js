@@ -6,10 +6,7 @@ const secret = process.env.REACT_APP_SECRET || 'wrong';
  * @param {object} data any type that can be stringified
  * @returns {string} encrypted string
  */
-export const encrypt = data => {
-  const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString();
-  return ciphertext;
-};
+export const encrypt = data => CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString();
 
 /**
  * Returns an HMAC SHA512 digest for given string
@@ -26,6 +23,4 @@ export const timedDigest = input => {
  * @param {string} input 
  * @returns {string} hash
  */
-export const hash = input => {
-  return CryptoJS.SHA3(input).toString();
-};
+export const hash = input => CryptoJS.SHA3(input).toString();
