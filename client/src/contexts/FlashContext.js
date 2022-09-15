@@ -7,6 +7,7 @@ export const FlashContext = React.createContext({
 
 export const FlashProvider = ({ children }) => {
   const [flashList, setFlashList] = React.useState([]);
+  console.log("🚀 ~ file: FlashContext.js ~ line 10 ~ FlashProvider ~ flashList", flashList)
 
   const addFlash = (message, type) => {
     setFlashList([...flashList, {message, type}]);
