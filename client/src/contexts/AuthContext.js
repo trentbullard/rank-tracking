@@ -57,7 +57,10 @@ export const AuthProvider = ({ children }) => {
     }).then(res => {
       setCurrentUser(res.data);
       setSession(user.session_id);
-    }).catch(error => console.log(error));
+    }).catch(error => {
+      console.log("🚀 ~ file: AuthContext.js ~ line 61 ~ socialAuth ~ error", error)
+      addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');
+    });
   };
 
   const signup = authData => {
