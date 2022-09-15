@@ -27,10 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(middleware.log);
 app.use(middleware.auth);
 
-app.get('/', (req, res) => res.json({ message: 'ok' }));
+app.get('/api', (req, res) => res.json({ message: 'ok' }));
 
-app.use('/users', router.users);
-app.use('/auth', router.auth);
+app.use('/api/users', router.users);
+app.use('/api/auth', router.auth);
 
 app.use((error, req, res, next) => {
   const status = error.status || 500;
