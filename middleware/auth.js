@@ -1,8 +1,7 @@
 import { digest } from '../helpers/cryptography.js';
 import { getThisAndLastMinute } from '../helpers/chronography.js';
 
-export default ({ method, _parsedUrl: { pathname }, headers: { authorization } }, res, next) => {
-  !authorization && res.status(401).json({ error: 'unauthorized' });
+export default ({ method, _parsedUrl: { pathname }, headers: { authorization='' } }, res, next) => {
   const [type, token] = authorization.split(' ');
   const [thisMinute, lastMinute] = getThisAndLastMinute();
   const thisMinuteHash = digest(thisMinute + method + pathname);
@@ -10,7 +9,6 @@ export default ({ method, _parsedUrl: { pathname }, headers: { authorization } }
   if (type === 'Bearer' && (token === thisMinuteHash || token === lastMinuteHash)) {
     next();
   } else {
-    res.status(401).json({ error: 'not authorized' });
-    return;
+    return res.status(401).json({ error: 'unauthorized' });
   };
 };
