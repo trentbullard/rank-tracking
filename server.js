@@ -12,17 +12,6 @@ import { Model } from 'objection';
 const knex = Knex(knexConfig.development);
 Model.knex(knex);
 
-console.log('port', process.env.PORT);
-console.log('secret', process.env.SECRET_KEY);
-console.log('db name', process.env.DB_NAME);
-console.log('db user', process.env.DB_USER);
-console.log('db password', process.env.DB_PASSWORD);
-console.log('db host', process.env.DB_HOST);
-console.log('cors', process.env.CORS_ORIGIN);
-console.log('key', process.env.SSL_KEY);
-console.log('cert', process.env.SSL_CERT);
-console.log('ca', process.env.SSL_CA);
-
 import router from './routes/index.js';
 import middleware from './middleware/index.js';
 
