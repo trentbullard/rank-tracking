@@ -49,15 +49,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const socialAuth = user => {
-    const serializedUser = {
-      email: user.email,
-      first_name: user.givenName,
-      last_name: user.familyName,
-      avatar_url: user.imageUrl,
-      username: user.name,
-      session_id: timedDigest(user.socialId),
-    };
-    const data = encrypt(JSON.stringify(serializedUser));
+    const data = encrypt(JSON.stringify(user));
     api.post('/auth/social', {params: {data}}, {
       headers: {
         'Authorization': `Bearer ${timedDigest(`POST/auth/social`)}`,

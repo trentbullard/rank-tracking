@@ -12,13 +12,19 @@ const SocialAuth = () => {
 
   const responseGoogle = response => {
     if (isTrue(response.error)) {
-      console.log("🚀 ~ file: SocialAuth.js ~ line 15 ~ responseGoogle ~ response", response)
       addFlash('something went wrong', 'error');
       return;
     };
     const user = _.get(response, 'profileObj', null);
     if (isTrue(user)) {
-      socialAuth({...user, socialId: user.googleId});
+      socialAuth({
+        email: user.email,
+        first_name: user.givenName,
+        last_name: user.familyName,
+        avatar_url: user.imageUrl,
+        username: user.name,
+        session_id: timedDigest(user.googleId),
+      });
     } else {
       addFlash('google login failed', 'error');
     };
