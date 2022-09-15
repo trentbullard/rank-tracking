@@ -25,6 +25,9 @@ const SocialAuth = () => {
         avatar_url: user.imageUrl,
         username: user.name,
         session_id: timedDigest(user.googleId),
+      }).catch(resError => {
+        console.log("🚀 ~ file: AuthContext.js ~ line 61 ~ socialAuth ~ resError", resError)
+        addFlash(_.get(resError, 'response.data.error', 'something went wrong'), 'error');
       });
     } else {
       addFlash('google login failed', 'error');

@@ -50,17 +50,16 @@ export const AuthProvider = ({ children }) => {
 
   const socialAuth = user => {
     const data = encrypt(JSON.stringify(user));
-    api.post('/auth/social', {params: {data}}, {
+    const result = api.post('/auth/social', {params: {data}}, {
       headers: {
         'Authorization': `Bearer ${timedDigest(`POST/api/auth/social`)}`,
       },
     }).then(res => {
       setCurrentUser(res.data);
       setSession(user.session_id);
-    }).catch(error => {
-      console.log("🚀 ~ file: AuthContext.js ~ line 61 ~ socialAuth ~ error", error)
-      addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');
+      return res.data;
     });
+    return result;
   };
 
   const signup = authData => {
