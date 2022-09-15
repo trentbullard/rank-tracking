@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     const data = encrypt(session);
     api.get('/auth/session', {
       headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/auth/session`)}`,
+        'Authorization': `Bearer ${timedDigest(`GET/api/auth/session`)}`,
       },
       params: {data},
     })
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     const data = encrypt(JSON.stringify(authData));
     const result = api.get('/auth', {
       headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/auth`)}`,
+        'Authorization': `Bearer ${timedDigest(`GET/api/auth`)}`,
       },
       params: {data},
     }).then(res => {
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     const data = encrypt(JSON.stringify(user));
     api.post('/auth/social', {params: {data}}, {
       headers: {
-        'Authorization': `Bearer ${timedDigest(`POST/auth/social`)}`,
+        'Authorization': `Bearer ${timedDigest(`POST/api/auth/social`)}`,
       },
     }).then(res => {
       setCurrentUser(res.data);
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     const data = encrypt(JSON.stringify(authData));
     const result = api.post('/auth/signup', {params: {data}}, {
       headers: {
-        'Authorization': `Bearer ${timedDigest(`POST/auth/signup`)}`,
+        'Authorization': `Bearer ${timedDigest(`POST/api/auth/signup`)}`,
       },
     }).then(res => {
       setCurrentUser(res.data);
