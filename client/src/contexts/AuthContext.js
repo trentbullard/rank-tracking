@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       },
     }).then(res => {
       setCurrentUser(res.data);
-      setSession(serializedUser.session_id);
+      setSession(user.session_id);
     }).catch(error => console.log(error));
   };
 

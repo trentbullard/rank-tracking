@@ -4,6 +4,7 @@ import GoogleLogin from 'react-google-login';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
+import { timedDigest } from '../../helpers/cryptography';
 import { isTrue } from '../../helpers/boolean';
 
 const SocialAuth = () => {
