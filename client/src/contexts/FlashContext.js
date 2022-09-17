@@ -8,9 +8,7 @@ export const FlashContext = React.createContext({
 export const FlashProvider = ({ children }) => {
   const [flashList, setFlashList] = React.useState([]);
 
-  const addFlash = (message, type) => {
-    setFlashList([...flashList, {message, type}]);
-  };
+  const addFlash = React.useCallback((message, type) => setFlashList(f => [...f, {message, type}]), []);
 
   const removeFlash = index => {
     const newFlashList = [...flashList];
