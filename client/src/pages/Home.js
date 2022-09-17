@@ -1,10 +1,14 @@
+import _ from 'lodash';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Divider, Link, Paper, Stack, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 
+import api from '../api/api';
 import { AuthContext } from '../contexts/AuthContext';
+import { FlashContext } from '../contexts/FlashContext';
 import { TitlePageLayout } from '../components/layouts';
+import { timedDigest } from '../helpers/cryptography';
 import { icons } from '../img/icons';
 
 const StyledLink = styled(Link)({
@@ -35,8 +39,22 @@ const NewGameButton = ({sport}) => {
 };
 
 const Home = () => {
+  const [sports, setSports] = React.useState([]);
   const { currentUser } = React.useContext(AuthContext);
+  const { addFlash } = React.useContext(FlashContext);
   const name = currentUser?.first_name || currentUser?.username || currentUser?.email;
+
+  React.useEffect(() => {
+    api.get(`/sports`, {
+      headers: {
+        'Authorization': `Bearer ${timedDigest(`GET/api/sports`)}`,
+      },
+    }).then(res => {
+      setSports(res.data);
+    }).catch(error => {
+      addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');
+    });
+  }, [addFlash]);
   
   return (
     <TitlePageLayout title={`${name}'s Dashboard`}>
@@ -52,8 +70,8 @@ const Home = () => {
         </Stack>
         <StyledNewGameList>
           <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ width: "100%", gap: "1rem" }}>
-            {Object.keys(icons()).map((sport) => (
-              <NewGameButton sport={sport} key={sport} />
+            {_.map(sports, sport => (
+              <NewGameButton sport={sport.name} key={sport.name} />
             ))}
           </Box>
           <Typography variant="body2">
