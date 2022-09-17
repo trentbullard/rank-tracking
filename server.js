@@ -43,10 +43,16 @@ app.use((error, req, res, next) => {
 app.use(middleware.error404);
 
 const port = process.env.PORT || 3002;
-const privateKey = fs.readFileSync(process.env.SSL_KEY, 'utf8');
-const certificate = fs.readFileSync(process.env.SSL_CERT, 'utf8');
-const ca = fs.readFileSync(process.env.SSL_CA, 'utf8');
-const credentials = { key: privateKey, cert: certificate, ca: ca };
-https.createServer(credentials, app).listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+if (process.env.NODE_ENV === 'production') {
+  const privateKey = fs.readFileSync(process.env.SSL_KEY, 'utf8');
+  const certificate = fs.readFileSync(process.env.SSL_CERT, 'utf8');
+  const ca = fs.readFileSync(process.env.SSL_CA, 'utf8');
+  const credentials = { key: privateKey, cert: certificate, ca: ca };
+  https.createServer(credentials, app).listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+} else {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+};
