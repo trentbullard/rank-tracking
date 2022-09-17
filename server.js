@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === 'production') {
   const ca = fs.readFileSync(process.env.SSL_CA, 'utf8');
   const credentials = { key: privateKey, cert: certificate, ca: ca };
   https.createServer(credentials, app).listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`Listening securely on port ${port}`);
   });
 } else {
   app.listen(port, () => {
