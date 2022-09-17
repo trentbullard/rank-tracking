@@ -1,6 +1,6 @@
 import express from 'express';
 import controller from '../controllers/index.js';
-const { get, create, update, remove } = controller.games;
+const { get, create, update, remove } = controller.leagues;
 
 const leaguesRouter = express.Router();
 
