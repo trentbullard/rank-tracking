@@ -25,7 +25,7 @@ const StyledNewGameList = styled(Paper)({
 const NewGameButton = ({sport}) => {
   const imgSize = "100%";
   return (
-    <StyledLink component={RouterLink} to={`/game/new?sport=${sport}`}>
+    <StyledLink component={RouterLink} to={`/games/new?sport=${sport}`}>
       <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="column" sx={{ width: imgSize, height: imgSize }}>
         <Box component="img" src={icons()[sport]} alt={`${sport}`} sx={{ height: imgSize, width: imgSize }} />
         <Box>{sport}</Box>

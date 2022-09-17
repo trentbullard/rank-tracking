@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import LeagueDetails from './pages/league/LeagueDetails';
 import NewLeague from './pages/league/NewLeague';
+import NewGame from './pages/game/NewGame';
 import NotFound from './components/utility/404';
 import { isTrue } from './helpers/boolean';
 
@@ -40,6 +41,7 @@ root.render(
                 <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
                 <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
                 <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
+                <Route path="games/new" element={<AuthComponent element={<NewGame />} />} />
                 <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
                 <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
                 <Route path="*" element={<NotFound />} />

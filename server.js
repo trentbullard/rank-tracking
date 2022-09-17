@@ -30,6 +30,8 @@ app.use(middleware.auth);
 app.get('/api', (req, res) => res.json({ message: 'ok' }));
 
 app.use('/api/users', router.users);
+app.use('/api/games', router.games);
+app.use('/api/leagues', router.leagues);
 app.use('/api/auth', router.auth);
 
 app.use((error, req, res, next) => {
