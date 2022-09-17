@@ -1,15 +1,15 @@
 import _ from 'lodash';
-import League from '../models/League.js';
+import Season from '../models/Season.js';
 
 export const get = async ({ query }, res, next) => {
   try {
-    let leagues = [];
+    let seasons = [];
     if (_.isEmpty(query)) {
-      leagues = await League.query();
+      seasons = await Season.query();
     } else {
-      leagues = await League.query().where(query);
+      seasons = await Season.query().where(query);
     };
-    res.json(leagues);
+    res.json(seasons);
   } catch (err) {
     next(err);
   };
@@ -17,8 +17,8 @@ export const get = async ({ query }, res, next) => {
 
 export const create = async (req, res, next) => {
   try {
-    const league = await League.query().insert(req.body);
-    res.json(league);
+    const season = await Season.query().insert(req.body);
+    res.json(season);
   } catch (err) {
     next(err);
   };
@@ -26,8 +26,8 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const league = await League.query().patch(req.body).where(req.query);
-    res.json(league);
+    const season = await Season.query().patch(req.body).where(req.query);
+    res.json(season);
   } catch (err) {
     next(err);
   };
@@ -35,8 +35,8 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const league = await League.query().delete().where(req.query);
-    res.json(league);
+    const season = await Season.query().delete().where(req.query);
+    res.json(season);
   } catch (err) {
     next(err);
   };
