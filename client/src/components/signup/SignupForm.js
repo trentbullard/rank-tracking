@@ -67,7 +67,7 @@ const SignupForm = () => {
           animate={animate}
         >
           <TextField
-            label="email"
+            label="Email"
             name="email"
             value={email}
             fullWidth
@@ -85,7 +85,7 @@ const SignupForm = () => {
             }}
           />
           <TextField
-            label="password"
+            label="Password"
             name="password"
             type={showPassword ? 'text' : 'password'}
             value={password}
@@ -124,7 +124,7 @@ const SignupForm = () => {
             }}
           />
           <TextField
-            label="confirm password"
+            label="Confirm Password"
             name="passwordConfirm"
             type={showPassword ? 'text' : 'password'}
             value={passwordConfirm}

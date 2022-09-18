@@ -101,7 +101,7 @@ const LoginForm = () => {
             animate={animate}
           >
             <TextField
-              label="email"
+              label="Email"
               name="email"
               value={email}
               fullWidth
@@ -120,7 +120,7 @@ const LoginForm = () => {
               helperText={error.email}
             />
             <TextField
-              label="password"
+              label="Password"
               name="password"
               value={password}
               type={showPassword ? "text" : "password"}
