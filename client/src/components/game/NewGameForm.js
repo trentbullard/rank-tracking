@@ -8,9 +8,12 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TextField,
   Tooltip,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SaveIcon from '@mui/icons-material/Save';
 import { motion } from 'framer-motion';
 
 import api from '../../api/api';
@@ -37,12 +40,12 @@ const LeagueSelector = ({ leagues, setLeague, selectedLeague, onClickAddLeague }
         fullWidth
         disabled={isFalse(leagues)}
       >
-        <InputLabel id="league-select-label">League</InputLabel>
+        <InputLabel id="league-select-label">League (optional)</InputLabel>
         <Select
           labelId="league-select-label"
           id="league-select"
           value={selectedLeague}
-          label="League"
+          label="League (optional)"
           onChange={e => setLeague(e.target.value)}
         >
           {_.map(leagues, league => (
@@ -69,12 +72,12 @@ const SeasonSelector = ({ seasons, setSeason, selectedSeason, onClickAddSeason }
         fullWidth
         disabled={isFalse(seasons)}
       >
-        <InputLabel id="season-select-label">Season</InputLabel>
+        <InputLabel id="season-select-label">Season (optional)</InputLabel>
         <Select
           labelId="season-select-label"
           id="season-select"
           value={selectedSeason}
-          label="Season"
+          label="Season (optional)"
           onChange={e => setSeason(e.target.value)}
         >
           {_.map(seasons, season => (
@@ -92,7 +95,21 @@ const SeasonSelector = ({ seasons, setSeason, selectedSeason, onClickAddSeason }
   );
 };
 
+const GameNameInput = ({ gameName, setGameName }) => {
+  return (
+    <TextField
+      fullWidth
+      id="game-name"
+      label="Name"
+      value={gameName}
+      onChange={e => setGameName(e.target.value)}
+      required
+    />
+  );
+};
+
 const NewGameForm = ({ sport }) => {
+  const [name, setName] = React.useState('');
   const [leagues, setLeagues] = React.useState([]);
   const [league, setLeague] = React.useState('');
   const [seasons, setSeasons] = React.useState([]);
@@ -163,6 +180,17 @@ const NewGameForm = ({ sport }) => {
         >
           <LeagueSelector leagues={leagues} setLeague={setLeague} selectedLeague={league} onClickAddLeague={onClickAddLeague} />
           {isTrue(league) && <SeasonSelector seasons={seasons} setSeason={setSeason} selectedSeason={season} onClickAddSeason={onClickAddSeason} />}
+          <GameNameInput gameName={name} setGameName={setName} />
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            color="primary"
+            loading={false}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </LoadingButton>
         </Box>
       </form>
     </Box>
