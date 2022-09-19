@@ -33,6 +33,8 @@ app.use('/api/users', router.users);
 app.use('/api/games', router.games);
 app.use('/api/leagues', router.leagues);
 app.use('/api/seasons', router.seasons);
+app.use('/api/matches', router.matches);
+app.use('/api/sets', router.sets);
 app.use('/api/sports', router.sports);
 app.use('/api/auth', router.auth);
 

@@ -3,6 +3,8 @@ import auth from './auth.js';
 import games from './games.js';
 import leagues from './leagues.js';
 import seasons from './seasons.js';
+import matches from './matches.js';
+import sets from './sets.js';
 import sports from './sports.js';
 export default {
   users,
@@ -10,5 +12,7 @@ export default {
   games,
   leagues,
   seasons,
+  matches,
+  sets,
   sports,
 };
