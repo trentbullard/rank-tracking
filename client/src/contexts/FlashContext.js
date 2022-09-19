@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-export const FlashContext = React.createContext({
-  flashList: [],
-  setFlashList: () => {},
-});
+export const FlashContext = React.createContext();
 
 export const FlashProvider = ({ children }) => {
   const [flashList, setFlashList] = React.useState([]);
