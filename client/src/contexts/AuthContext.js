@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }) => {
       },
       params: {data},
     })
-    .then(res => {setCurrentUser(res.data);})
-    .catch(error => setSession(null));
+    .then(res => setCurrentUser(res.data))
+    .catch(_ => setSession(null));
   };
 
   React.useEffect(() => {
