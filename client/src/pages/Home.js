@@ -30,9 +30,14 @@ const NewGameButton = ({sport}) => {
   const imgSize = "100%";
   return (
     <StyledLink component={RouterLink} to={`/games/new?sport=${sport}`}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="column" sx={{ width: imgSize, height: imgSize }}>
+      <Box display="flex" alignItems="center" flexDirection="column" sx={{ width: imgSize, height: imgSize }}>
         <Box component="img" src={icons()[sport]} alt={`${sport}`} sx={{ height: imgSize, width: imgSize }} />
-        <Box>{sport}</Box>
+        <Typography
+          variant="subtitle2"
+          sx={{ textTransform: "uppercase", fontWeight: "light", fontSize: "xx-small" }}
+        >
+          {sport}
+        </Typography>
       </Box>
     </StyledLink>
   );
@@ -69,7 +74,7 @@ const Home = () => {
           <StyledLink component={RouterLink} to="/games">GAMES</StyledLink>
         </Stack>
         <StyledNewGameList>
-          <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ width: "100%", gap: "1rem" }}>
+          <Box display="flex" justifyContent="space-between" alignItems="flex-end" sx={{ width: "100%", gap: "1rem" }}>
             {_.map(sports, sport => (
               <NewGameButton sport={sport.name} key={sport.name} />
             ))}
