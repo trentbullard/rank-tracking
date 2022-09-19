@@ -16,12 +16,11 @@ const headCells = [
 
 const LeagueList = ({ leagues }) => {
   const rows = _.map(leagues, league => {
-    const date = new Date(league.created_at);
     return {
       name: league.name,
       sport: league.sport_name,
       owner: league.owner_fname + ' ' + league.owner_lname,
-      createdAt: date.toLocaleDateString(),
+      createdAt: new Date(league.created_at).toLocaleDateString(),
       format: league.format,
       status: league.status,
     };

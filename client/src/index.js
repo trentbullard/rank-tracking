@@ -14,6 +14,7 @@ import NewGameProvider from './contexts/NewGameContext';
 import App from "./components/App";
 import Home from './pages/Home';
 import Leagues from './pages/league/Leagues';
+import Games from './pages/game/Games';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import LeagueDetails from './pages/league/LeagueDetails';
@@ -42,6 +43,7 @@ root.render(
                 <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
                 <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
                 <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
+                <Route path="games" element={<AuthComponent element={<Games />} />} />
                 <Route path="games/new" element={<AuthComponent element={<NewGameProvider><NewGame /></NewGameProvider>} />} />
                 <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
                 <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
