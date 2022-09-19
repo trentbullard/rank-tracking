@@ -10,6 +10,7 @@ import { darkTheme as theme } from "./theme";
 import AuthProvider from './contexts/AuthContext';
 import { AuthContext } from './contexts/AuthContext';
 import FlashProvider from './contexts/FlashContext';
+import NewGameProvider from './contexts/NewGameContext';
 import App from "./components/App";
 import Home from './pages/Home';
 import Leagues from './pages/league/Leagues';
@@ -41,7 +42,7 @@ root.render(
                 <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
                 <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
                 <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
-                <Route path="games/new" element={<AuthComponent element={<NewGame />} />} />
+                <Route path="games/new" element={<AuthComponent element={<NewGameProvider><NewGame /></NewGameProvider>} />} />
                 <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
                 <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
                 <Route path="*" element={<NotFound />} />
