@@ -32,6 +32,8 @@ const SignupForm = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [passwordConfirm, setPasswordConfirm] = React.useState('');
+  const [passwordTouched, setPasswordTouched] = React.useState(false);
+  const [passwordConfirmTouched, setPasswordConfirmTouched] = React.useState(false);
   const [error, setError] = React.useState({});
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -51,6 +53,18 @@ const SignupForm = () => {
       console.log("🚀 ~ file: SignupForm.js ~ line 51 ~ signup ~ resError", resError)
       addFlash(_.get(resError, 'response.data.error', 'something went wrong'), 'error');
     }).finally(() => setLoading(false));
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (isFalse(email)) errors.email = 'Email is required';
+    if (passwordTouched && isFalse(password)) errors.password = 'Password is required';
+    if (passwordConfirmTouched && isFalse(passwordConfirm)) errors.passwordConfirm = 'Password confirmation is required';
+    if (passwordConfirmTouched && password !== passwordConfirm) {
+      errors.password = 'Passwords do not match';
+      errors.passwordConfirm = 'Passwords do not match';
+    };
+    setError(errors);
   };
   
   return (
@@ -94,26 +108,14 @@ const SignupForm = () => {
             helperText={error.password}
             onChange={e => setPassword(e.target.value)}
             onBlur={e => {
-              if (isFalse(password.trim())) {
-                setError({ ...error, password: 'Password cant be blank' });
-              } else {
-                const tempError = { ...error };
-                delete tempError.password;
-                setError(tempError);
-              };
-              if (password !== passwordConfirm) {
-                setError({ ...error, password: 'Passwords do not match' });
-              } else {
-                const tempError = { ...error };
-                delete tempError.password;
-                delete tempError.passwordConfirm;
-                setError(tempError);
-              };
+              setPasswordTouched(true);
+              validate();
             }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
+                    tabIndex={-1}
                     aria-label="toggle password visibility"
                     onClick={() => setShowPassword(!showPassword)}
                   >
@@ -131,28 +133,26 @@ const SignupForm = () => {
             fullWidth
             error={isTrue(error.passwordConfirm)}
             helperText={error.passwordConfirm}
-            onChange={e => setPasswordConfirm(e.target.value)}
+            onChange={e => {
+              setPasswordConfirm(e.target.value)
+              if (password === e.target.value) {
+                const tempError = { ...error };
+                delete tempError.passwordConfirm;
+                if (tempError.password === 'Passwords do not match') {
+                  delete tempError.password;
+                };
+                setError(tempError);
+              };
+            }}
             onBlur={e => {
-              if (isFalse(passwordConfirm.trim())) {
-                setError({ ...error, passwordConfirm: 'Password cant be blank' });
-              } else {
-                const tempError = { ...error };
-                delete tempError.passwordConfirm;
-                setError(tempError);
-              };
-              if (password !== passwordConfirm) {
-                setError({ ...error, passwordConfirm: 'Passwords do not match' });
-              } else {
-                const tempError = { ...error };
-                delete tempError.passwordConfirm;
-                delete tempError.password;
-                setError(tempError);
-              };
+              setPasswordConfirmTouched(true);
+              validate();
             }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
+                    tabIndex={-1}
                     aria-label="toggle password visibility"
                     onClick={() => setShowPassword(!showPassword)}
                   >
