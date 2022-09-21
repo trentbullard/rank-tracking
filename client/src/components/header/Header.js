@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Typography, Link } from '@mui/material';
+
 import UserArea from './UserArea';
+import BackButton from './BackButton';
 
 const Header = () => {
   return (
@@ -14,6 +16,7 @@ const Header = () => {
           </Typography>
         </Typography>
       </Box>
+      <BackButton />
       <UserArea />
     </>
   )
