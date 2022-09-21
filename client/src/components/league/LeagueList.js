@@ -6,6 +6,7 @@ import TableContainer from '../../components/ui/Table/Container';
 import { isTrue } from '../../helpers/boolean';
 
 const headCells = [
+  { id: 'id', label: 'ID' },
   { id: 'name', label: 'Name' },
   { id: 'sport', label: 'Sport' },
   { id: 'owner', label: 'Owner' },
@@ -17,6 +18,7 @@ const headCells = [
 const LeagueList = ({ leagues }) => {
   const rows = _.map(leagues, league => {
     return {
+      id: league.id,
       name: league.name,
       sport: league.sport_name,
       owner: league.owner_fname + ' ' + league.owner_lname,

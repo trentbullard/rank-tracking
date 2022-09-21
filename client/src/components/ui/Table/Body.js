@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useNavigate } from 'react-router-dom';
 import {
   TableBody,
   TableCell,
@@ -6,6 +7,7 @@ import {
 } from '@mui/material';
 
 const Body = ({ rows, emptyRows }) => {
+  const navigate = useNavigate();
   return (
     <TableBody>
       {_.map(rows, (row, rowIndex) => {
@@ -13,6 +15,7 @@ const Body = ({ rows, emptyRows }) => {
           <TableRow
             hover
             key={rowIndex}
+            onClick={() => navigate(`${row.id}`)}
           >
             {_.map(row, (cell, cellKey) => {
               return (

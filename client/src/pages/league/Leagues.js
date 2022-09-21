@@ -24,10 +24,10 @@ const Leagues = () => {
       },
       params: {owner_id: currentUser.id},
     })
-    .then(res => setLeagues(res.data))
-    .catch(error => {
-      addFlash(_.get(error, 'response.data.message', 'something went wrong'), 'error');
-    });
+    .then(res => setLeagues(_.reduce(res.data, (acc, league) => {
+      return _.find(acc, ['id', league.id]) ? acc : _.concat(acc, league);
+    }, [])))
+    .catch(error => addFlash(_.get(error, 'response.data.message', 'something went wrong'), 'error'));
   }, [currentUser, addFlash]);
   
   return (
