@@ -6,6 +6,7 @@ import seasons from './seasons.js';
 import matches from './matches.js';
 import sets from './sets.js';
 import sports from './sports.js';
+import teams from './teams.js';
 export default {
   users,
   auth,
@@ -15,4 +16,5 @@ export default {
   matches,
   sets,
   sports,
+  teams,
 };
