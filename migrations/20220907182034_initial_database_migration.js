@@ -69,7 +69,6 @@ const up = (knex) => {
   .createTable('teams', (table) => {
     table.increments('id').primary();
     table.string('name').notNullable();
-    table.integer('season_id').references('seasons.id');
     table.timestamp('deleted_at');
     table.timestamps(true, true);
   })
