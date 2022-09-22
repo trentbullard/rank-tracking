@@ -17,7 +17,7 @@ const BackButton = () => {
   const { pathname } = useLocation();
 
   return (
-    pathname === "/" ? null :
+    pathname === "/" || pathname === "/login" ? null :
       <ArrowBackIcon color="secondary" style={style} onClick={() => navigate(-1)} />
   );
 };
