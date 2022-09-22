@@ -128,7 +128,7 @@ const up = (knex) => {
     table.increments('id').primary();
     table.integer('rank').notNullable();
     table.integer('points').notNullable();
-    table.integer('rankable_type').notNullable(); // team or player
+    table.string('rankable_type').notNullable(); // team or player
     table.integer('rankable_id').notNullable();
     table.string('contest_type').notNullable(); // league, season, match, set, game
     table.integer('contest_id').notNullable();
