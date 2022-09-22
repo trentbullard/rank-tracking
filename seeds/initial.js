@@ -95,13 +95,13 @@ export const seed = async (knex) => {
   ]);
 
   await knex('game_teams').insert([
-    {game_id: 1, team_id: 1, score: 0},
-    {game_id: 2, team_id: 1, score: 0},
-    {game_id: 3, team_id: 1, score: 0},
-    {game_id: 4, team_id: 1, score: 0},
-    {game_id: 5, team_id: 1, score: 0},
-    {game_id: 6, team_id: 1, score: 0},
-    {game_id: 7, team_id: 1, score: 0},
-    {game_id: 8, team_id: 1, score: 0},
+    {game_id: 1, team_id: 1},
+    {game_id: 2, team_id: 1},
+    {game_id: 3, team_id: 1},
+    {game_id: 4, team_id: 1},
+    {game_id: 5, team_id: 1},
+    {game_id: 6, team_id: 1},
+    {game_id: 7, team_id: 1},
+    {game_id: 8, team_id: 1},
   ]);
 };
