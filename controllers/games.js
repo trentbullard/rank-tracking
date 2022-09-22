@@ -13,6 +13,7 @@ export const get = async ({ query }, res, next) => {
           'g.id as game_id',
           'g.name as game_name',
           'g.status as game_status',
+          'g.updated_at as updated_at',
           'g.collection_type as game_collection_type',
           'g.collection_id as game_collection_id',
           'sp.name as sport_name',

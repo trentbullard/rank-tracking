@@ -6,17 +6,25 @@ import TableContainer from '../../components/ui/Table/Container';
 import { isTrue } from '../../helpers/boolean';
 
 const headCells = [
-  { id: 'name', label: 'Name' },
-  { id: 'updatedAt', label: 'Played' },
-  { id: 'status', label: 'Status' },
+  { id: 'id', label: 'ID' },
+  { id: 'game_name', label: 'Name' },
+  { id: 'sport_name', label: 'Sport' },
+  { id: 'league_name', label: 'League' },
+  { id: 'game_status', label: 'Status' },
+  { id: 'updated_at', label: 'Played' },
+  { id: 'game_collection_type', label: 'Type' },
 ];
 
 const GameList = ({ games }) => {
   const rows = _.map(games, game => {
     return {
-      name: game.name,
-      updatedAt: new Date(game.updated_at).toLocaleDateString(),
-      status: game.status,
+      game_id: game.game_id,
+      game_name: game.game_name,
+      sport_name: game.sport_name,
+      league_name: game.league_name,
+      game_status: game.game_status,
+      updated_at: new Date(game.updated_at).toLocaleDateString(),
+      game_collection_type: game.game_collection_type,
     };
   });
   
