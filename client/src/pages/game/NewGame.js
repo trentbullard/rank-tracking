@@ -7,7 +7,6 @@ import { FlashContext } from '../../contexts/FlashContext';
 import { NewGameContext } from '../../contexts/NewGameContext';
 import FormLayout from '../../components/layouts/formPage/FormLayout';
 import NewGameForm from '../../components/game/NewGameForm/NewGameForm';
-import { timedDigest } from '../../helpers/cryptography';
 import { isFalse } from '../../helpers/boolean';
 
 const NewGame = () => {
@@ -19,9 +18,6 @@ const NewGame = () => {
   React.useEffect(() => {
     if (isFalse(sportName)) return;
     api.get(`/sports`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/sports`)}`,
-      },
       params: {
         name: sportName,
       },

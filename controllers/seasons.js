@@ -26,7 +26,7 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const season = await Season.query().patch(req.body).where(req.query);
+    const season = await Season.query().patch(req.body).where({ id: req.params.id });
     res.json(season);
   } catch (err) {
     next(err);
@@ -35,7 +35,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const season = await Season.query().delete().where(req.query);
+    const season = await Season.query().delete().where({ id: req.params.id });
     res.json(season);
   } catch (err) {
     next(err);

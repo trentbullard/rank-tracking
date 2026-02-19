@@ -15,7 +15,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../../../api/api';
 import { FlashContext } from '../../../contexts/FlashContext';
 import { NewGameContext } from '../../../contexts/NewGameContext';
-import { timedDigest } from '../../../helpers/cryptography';
 import { isFalse } from '../../../helpers/boolean';
 
 const LeagueSelector = ({ currentUser, sport }) => {
@@ -25,9 +24,6 @@ const LeagueSelector = ({ currentUser, sport }) => {
   React.useEffect(() => {
     if (isFalse(currentUser)) return;
     api.get(`/leagues`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/leagues`)}`,
-      },
       params: {
         owner_id: currentUser.id,
         sport_id: sport.id,

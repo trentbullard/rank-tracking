@@ -8,7 +8,6 @@ import api from '../api/api';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashContext } from '../contexts/FlashContext';
 import { TitlePageLayout } from '../components/layouts';
-import { timedDigest } from '../helpers/cryptography';
 import { icons } from '../img/icons';
 
 const StyledLink = styled(Link)({
@@ -50,11 +49,7 @@ const Home = () => {
   const name = currentUser?.first_name || currentUser?.username || currentUser?.email;
 
   React.useEffect(() => {
-    api.get(`/sports`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/sports`)}`,
-      },
-    }).then(res => {
+    api.get(`/sports`).then(res => {
       setSports(res.data);
     }).catch(error => {
       addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');

@@ -7,12 +7,10 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
 import { TitlePageLayout } from '../../components/layouts';
 import GameList from '../../components/game/GameList';
-import { timedDigest } from '../../helpers/cryptography';
 import { isFalse } from '../../helpers/boolean';
 
 const Games = () => {
   const [games, setGames] = React.useState([]);
-  console.log("🚀 ~ file: Games.js ~ line 15 ~ Games ~ games", games)
   const { addFlash } = React.useContext(FlashContext);
   const { currentUser } = React.useContext(AuthContext);
   const name = currentUser?.first_name || currentUser?.username || currentUser?.email;
@@ -20,9 +18,6 @@ const Games = () => {
   React.useEffect(() => {
     if (isFalse(currentUser)) return;
     api.get(`/games`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/games`)}`,
-      },
       params: {user_id: currentUser.id},
     })
     .then(res => setGames(res.data))

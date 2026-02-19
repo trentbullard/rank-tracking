@@ -15,7 +15,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../../../api/api';
 import { FlashContext } from '../../../contexts/FlashContext';
 import { NewGameContext } from '../../../contexts/NewGameContext';
-import { timedDigest } from '../../../helpers/cryptography';
 import { isFalse, isTrue } from '../../../helpers/boolean';
 
 const SetSelector = ({ league }) => {
@@ -34,22 +33,17 @@ const SetSelector = ({ league }) => {
     if (isFalse(leagueId)) return;
     const params = {
       collection_id: leagueId,
-      collection_type: 'leagues',
+      collection_type: 'league',
     };
     if (isTrue(selectedSeason)) {
-      params.collection_type = 'seasons';
+      params.collection_type = 'season';
       params.collection_id = selectedSeason.id;
     };
     if (isTrue(selectedMatch)) {
-      params.collection_type = 'matches';
-      params.collection_id = selectedSeason.id;
+      params.collection_type = 'match';
+      params.collection_id = selectedMatch.id;
     };
-    api.get(`/sets`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/sets`)}`,
-      },
-      params,
-    }).then(res => {
+    api.get(`/sets`, { params }).then(res => {
       setSets(res.data);
     }).catch(error => {
       addFlash(_.get(error, 'response.data.error', 'something went wrong'), 'error');

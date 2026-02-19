@@ -7,7 +7,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
 import { TitlePageLayout } from '../../components/layouts';
 import LeagueList from '../../components/league/LeagueList';
-import { timedDigest } from '../../helpers/cryptography';
 import { isFalse } from '../../helpers/boolean';
 
 const Leagues = () => {
@@ -19,9 +18,6 @@ const Leagues = () => {
   React.useEffect(() => {
     if (isFalse(currentUser)) return;
     api.get(`/leagues`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/leagues`)}`,
-      },
       params: {owner_id: currentUser.id},
     })
     .then(res => setLeagues(_.reduce(res.data, (acc, league) => {

@@ -14,7 +14,6 @@ import { motion } from 'framer-motion';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
-import { timedDigest, hash } from '../../helpers/cryptography';
 import { isTrue, isFalse } from '../../helpers/boolean';
 
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -45,9 +44,7 @@ const SignupForm = () => {
     e.preventDefault();
     if (loading) return;
     setLoading(true);
-    const passwordHash = hash(password);
-    const sessionId = timedDigest(password);
-    const authData = { email, passwordHash, sessionId };
+    const authData = { email, password };
     signup(authData).then(_res => {
       navigate(referrer, {replace: true});
     }).catch(resError => {

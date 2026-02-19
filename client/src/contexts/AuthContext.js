@@ -1,111 +1,82 @@
 import * as React from 'react';
-import Cookies from 'js-cookie';
 import api from '../api/api';
-import { timedDigest, encrypt } from '../helpers/cryptography';
-import { isFalse, isTrue } from '../helpers/boolean';
-
-const cookieName = 'MultiRankToken';
+import { setAccessToken } from '../api/api';
 
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [session, setSession] = React.useState(Cookies.get(cookieName));
   const [currentUser, setCurrentUser] = React.useState(null);
+  const [isAuthReady, setIsAuthReady] = React.useState(false);
   const [referrer, setReferrer] = React.useState("/");
 
   React.useEffect(() => {
     let isCancelled = false;
 
-    if (isFalse(currentUser) && isTrue(session)) {
-      const data = encrypt(session);
-      api.get('/auth/session', {
-        headers: {
-          'Authorization': `Bearer ${timedDigest(`GET/api/auth/session`)}`,
-        },
-        params: { data },
-      })
+    api.post('/auth/refresh')
       .then(res => {
-        if (!isCancelled) {
-          setCurrentUser(res.data);
-        };
+        if (isCancelled) return;
+        const token = res?.data?.accessToken || null;
+        const user = res?.data?.user || null;
+        setAccessToken(token);
+        setCurrentUser(user);
       })
-      .catch(_ => {
+      .catch(() => {
+        if (isCancelled) return;
+        setAccessToken(null);
+        setCurrentUser(null);
+      })
+      .finally(() => {
         if (!isCancelled) {
-          setSession(null);
+          setIsAuthReady(true);
         };
       });
-    };
 
     return () => {
       isCancelled = true;
     };
-  }, [currentUser, session]);
+  }, []);
 
-  React.useEffect(() => {
-    if (isFalse(session)) {
-      Cookies.remove(cookieName);
-    } else {
-      Cookies.set(cookieName, session, { expires: 7, SameSite: 'Strict' });
-    };
-  }, [session]);
-
-  const localAuth = authData => {
-    const data = encrypt(JSON.stringify(authData));
-    const result = api.get('/auth', {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/auth`)}`,
-      },
-      params: {data},
-    }).then(res => {
-      setCurrentUser(res.data);
-      setSession(authData.sessionId);
-      return res.data;
+  const localAuth = (authData) => {
+    return api.post('/auth/login', authData).then(res => {
+      setAccessToken(res?.data?.accessToken || null);
+      setCurrentUser(res?.data?.user || null);
+      return res?.data?.user || null;
     });
-    return result;
   };
 
-  const socialAuth = user => {
-    const data = encrypt(JSON.stringify(user));
-    const result = api.post('/auth/social', {params: {data}}, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`POST/api/auth/social`)}`,
-      },
-    }).then(res => {
-      setCurrentUser(res.data);
-      setSession(user.session_id);
-      return res.data;
+  const signup = (authData) => {
+    return api.post('/auth/signup', authData).then(res => {
+      setAccessToken(res?.data?.accessToken || null);
+      setCurrentUser(res?.data?.user || null);
+      return res?.data?.user || null;
     });
-    return result;
   };
 
-  const signup = authData => {
-    const data = encrypt(JSON.stringify(authData));
-    const result = api.post('/auth/signup', {params: {data}}, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`POST/api/auth/signup`)}`,
-      },
-    }).then(res => {
-      setCurrentUser(res.data);
-      setSession(authData.sessionId);
-      return res.data;
+  const googleAuth = (credential, remember = true) => {
+    return api.post('/auth/oauth/google', { credential, remember }).then(res => {
+      setAccessToken(res?.data?.accessToken || null);
+      setCurrentUser(res?.data?.user || null);
+      return res?.data?.user || null;
     });
-    return result;
   };
   
   const logout = () => {
-    setSession(null);
-    setCurrentUser(null);
-    setReferrer("/");
+    return api.post('/auth/logout')
+      .finally(() => {
+        setAccessToken(null);
+        setCurrentUser(null);
+        setReferrer("/");
+      });
   };
 
   const state = {
     currentUser,
-    session,
+    isAuthReady,
     referrer,
     logout,
     localAuth,
-    socialAuth,
     signup,
+    googleAuth,
   }
   
   return (

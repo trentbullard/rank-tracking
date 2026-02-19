@@ -49,7 +49,7 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const league = await League.query().patch(req.body).where(req.query);
+    const league = await League.query().patch(req.body).where({ id: req.params.id });
     res.json(league);
   } catch (err) {
     next(err);
@@ -58,7 +58,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const league = await League.query().delete().where(req.query);
+    const league = await League.query().delete().where({ id: req.params.id });
     res.json(league);
   } catch (err) {
     next(err);

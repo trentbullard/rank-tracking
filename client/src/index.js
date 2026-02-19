@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
@@ -23,41 +24,65 @@ import NewLeague from './pages/league/NewLeague';
 import NewGame from './pages/game/NewGame';
 import NotFound from './components/utility/404';
 import { isTrue } from './helpers/boolean';
+import { loadRuntimeConfig, getConfigValue } from './config/runtimeConfig';
 
 const AuthComponent = ({ element, noAuth }) => {
-  const { session } = React.useContext(AuthContext);
+  const { currentUser, isAuthReady } = React.useContext(AuthContext);
+  if (!isAuthReady) return null;
+
+  const isAuthenticated = isTrue(currentUser);
   const redirectTo = isTrue(noAuth) ? "/" : "/login";
-  return (isTrue(noAuth) !== isTrue(session)) ? element : <Navigate to={redirectTo} replace />;
+  return (isTrue(noAuth) !== isAuthenticated) ? element : <Navigate to={redirectTo} replace />;
+};
+
+const OAuthWrapper = ({ children }) => {
+  const googleClientId = getConfigValue('GOOGLE_CLIENT_ID');
+  if (!googleClientId) {
+    return children;
+  };
+
+  return (
+    <GoogleOAuthProvider clientId={googleClientId}>
+      {children}
+    </GoogleOAuthProvider>
+  );
 };
   
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <FlashProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<App />}>
-                <Route index element={<AuthComponent element={<Home />} />} />
-                <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
-                <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
-                <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
-                <Route path="teams" element={<AuthComponent element={<Teams />} />} />
-                <Route path="games" element={<AuthComponent element={<Games />} />} />
-                <Route path="games/new" element={<AuthComponent element={<NewGameProvider><NewGame /></NewGameProvider>} />} />
-                <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
-                <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </FlashProvider>
-    </ThemeProvider>
-  </React.StrictMode>
-);
+const startApp = async () => {
+  await loadRuntimeConfig();
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <OAuthWrapper>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <FlashProvider>
+            <AuthProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<App />}>
+                    <Route index element={<AuthComponent element={<Home />} />} />
+                    <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
+                    <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
+                    <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />
+                    <Route path="teams" element={<AuthComponent element={<Teams />} />} />
+                    <Route path="games" element={<AuthComponent element={<Games />} />} />
+                    <Route path="games/new" element={<AuthComponent element={<NewGameProvider><NewGame /></NewGameProvider>} />} />
+                    <Route path="login" element={<AuthComponent element={<Login />} noAuth />} />
+                    <Route path="signup" element={<AuthComponent element={<Signup />} noAuth />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </AuthProvider>
+          </FlashProvider>
+        </ThemeProvider>
+      </OAuthWrapper>
+    </React.StrictMode>
+  );
+};
+
+startApp();
 
 // info: https://bit.ly/CRA-vitals
 reportWebVitals(console.log);

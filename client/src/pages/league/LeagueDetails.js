@@ -22,7 +22,6 @@ import { FlashContext } from '../../contexts/FlashContext';
 import { TitlePageLayout } from '../../components/layouts';
 import LeagueDetailsItem from '../../components/league/LeagueDetailsItem';
 import LeagueDetailsStandings from '../../components/league/LeagueDetailsStandings';
-import { timedDigest } from '../../helpers/cryptography';
 import { isFalse, isTrue } from '../../helpers/boolean';
 
 const LeagueDetails = () => {
@@ -35,9 +34,6 @@ const LeagueDetails = () => {
   React.useEffect(() => {
     if (isFalse(id)) return;
     api.get(`/leagues`, {
-      headers: {
-        Authorization: `Bearer ${timedDigest(`GET/api/leagues`)}`,
-      },
       params: {"leagues.id": id},
     })
     .then((res) => setLeague({

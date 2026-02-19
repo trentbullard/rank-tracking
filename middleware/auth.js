@@ -1,14 +1,21 @@
-import { digest } from '../helpers/cryptography.js';
-import { getThisAndLastMinute } from '../helpers/chronography.js';
+import jwt from 'jsonwebtoken';
 
-export default ({ method, _parsedUrl: { pathname }, headers: { authorization='' } }, res, next) => {
+export default (req, res, next) => {
+  const authorization = req.headers.authorization || '';
   const [type, token] = authorization.split(' ');
-  const [thisMinute, lastMinute] = getThisAndLastMinute();
-  const thisMinuteHash = digest(thisMinute + method + pathname);
-  const lastMinuteHash = digest(lastMinute + method + pathname);
-  if (type === 'Bearer' && (token === thisMinuteHash || token === lastMinuteHash)) {
+
+  if (type !== 'Bearer' || !token) {
+    return res.status(401).json({ error: 'unauthorized: missing token' });
+  };
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    if (payload.token_type !== 'access') {
+      return res.status(401).json({ error: 'unauthorized: invalid token type' });
+    };
+    req.auth = payload;
     next();
-  } else {
-    return res.status(401).json({ error: 'unauthorized: bad token' });
+  } catch (error) {
+    return res.status(401).json({ error: 'unauthorized: invalid token' });
   };
 };

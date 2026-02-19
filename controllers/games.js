@@ -78,7 +78,7 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const game = await Game.query().patch(req.body).where(req.query);
+    const game = await Game.query().patch(req.body).where({ id: req.params.id });
     res.json(game);
   } catch (err) {
     next(err);
@@ -87,7 +87,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const game = await Game.query().delete().where(req.query);
+    const game = await Game.query().delete().where({ id: req.params.id });
     res.json(game);
   } catch (err) {
     next(err);

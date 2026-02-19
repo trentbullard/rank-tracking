@@ -51,7 +51,7 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const team = await Team.query().patch(req.body).where(req.query);
+    const team = await Team.query().patch(req.body).where({ id: req.params.id });
     res.json(team);
   } catch (err) {
     next(err);
@@ -60,7 +60,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const team = await Team.query().delete().where(req.query);
+    const team = await Team.query().delete().where({ id: req.params.id });
     res.json(team);
   } catch (err) {
     next(err);

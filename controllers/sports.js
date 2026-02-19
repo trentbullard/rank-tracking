@@ -26,7 +26,7 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const sport = await Sport.query().patch(req.body).where(req.query);
+    const sport = await Sport.query().patch(req.body).where({ id: req.params.id });
     res.json(sport);
   } catch (err) {
     next(err);
@@ -35,7 +35,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const sport = await Sport.query().delete().where(req.query);
+    const sport = await Sport.query().delete().where({ id: req.params.id });
     res.json(sport);
   } catch (err) {
     next(err);

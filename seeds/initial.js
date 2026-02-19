@@ -1,21 +1,42 @@
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+dotenv.config();
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 export const seed = async (knex) => {
-  await knex('logs').del();
-  await knex('team_players').del();
-  await knex('teams').del();
-  await knex('games').del();
-  await knex('sets').del();
-  await knex('matches').del();
-  await knex('seasons').del();
-  await knex('leagues').del();
-  await knex('players').del();
-  await knex('users').del();
-  await knex('objectives').del();
-  await knex('positions').del();
-  await knex('sports').del();
+  const env = process.env.NODE_ENV || 'development';
+  const allowedEnvs = new Set(['development', 'test', 'local']);
+  if (!allowedEnvs.has(env)) {
+    throw new Error(`Refusing to run destructive seed in NODE_ENV=${env}`);
+  };
+
+  await knex.raw(`
+    TRUNCATE TABLE
+      "comments",
+      "posts",
+      "taggable_tags",
+      "tags",
+      "logs",
+      "standings",
+      "player_objectives",
+      "game_teams",
+      "team_players",
+      "games",
+      "sets",
+      "matches",
+      "teams",
+      "seasons",
+      "leagues",
+      "objectives",
+      "positions",
+      "sports",
+      "players",
+      "users"
+    RESTART IDENTITY CASCADE
+  `);
 
   await knex('sports').insert([
     {name: 'foosball'},
@@ -44,8 +65,9 @@ export const seed = async (knex) => {
     {name: 'goal', value: 1, sport_id: 4},
   ]);
 
+  const passwordHash = await bcrypt.hash(process.env.SEED_PASSWORD ?? 'dev-only-password', 12);
   await knex('users').insert([
-    {email: 'some@thing.com', password_hash: '9c46dbec5d03f74352cc4a4da354b4e9796887eeb66ac292617692e765dbe400352559b16229f97b27614b51dbfbbb14613f2c10350435a8feaf53f73ba01c7c', first_name: 'trent', last_name: 'bullard', },
+    {email: 'some@thing.com', password_hash: passwordHash, first_name: 'trent', last_name: 'bullard', },
   ]);
 
   await knex('players').insert([

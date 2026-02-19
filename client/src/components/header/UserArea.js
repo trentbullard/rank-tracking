@@ -42,9 +42,9 @@ const AuthenticatedUserArea = _props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleClose();
-    logout();
+    await logout();
     navigate("./login", { replace: true });
   };
   

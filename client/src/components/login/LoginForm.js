@@ -20,7 +20,6 @@ import { motion } from 'framer-motion';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
-import { timedDigest, hash } from '../../helpers/cryptography';
 
 const StyledLink = styled(Link)({
   color: 'text.primary',
@@ -69,9 +68,7 @@ const LoginForm = () => {
     e.preventDefault();
     if (loading) return;
     setLoading(true);
-    const passwordHash = hash(password);
-    const sessionId = timedDigest(password);
-    const authData = {email, passwordHash, sessionId, remember};
+    const authData = { email, password, remember };
     localAuth(authData).then(_res => {
       navigate(referrer, {replace: true});
     }).catch(resError => {

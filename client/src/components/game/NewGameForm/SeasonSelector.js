@@ -15,7 +15,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../../../api/api';
 import { FlashContext } from '../../../contexts/FlashContext';
 import { NewGameContext } from '../../../contexts/NewGameContext';
-import { timedDigest } from '../../../helpers/cryptography';
 import { isFalse, isTrue } from '../../../helpers/boolean';
 
 const SeasonSelector = ({ league }) => {
@@ -31,9 +30,6 @@ const SeasonSelector = ({ league }) => {
   React.useEffect(() => {
     if (isFalse(leagueId)) return;
     api.get(`/seasons`, {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/seasons`)}`,
-      },
       params: {
         league_id: leagueId,
       },
