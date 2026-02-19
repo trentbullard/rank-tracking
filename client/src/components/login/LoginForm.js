@@ -67,6 +67,7 @@ const LoginForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     const passwordHash = hash(password);
     const sessionId = timedDigest(password);
@@ -185,7 +186,6 @@ const LoginForm = () => {
             size="large"
             variant="contained"
             loading={loading}
-            onClick={onSubmit}
             disabled={loading || email.length < 1 || password.length < 1}
           >
             {loading ? 'loading...' : 'login'}

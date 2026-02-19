@@ -12,18 +12,34 @@ export const AuthProvider = ({ children }) => {
   const [session, setSession] = React.useState(Cookies.get(cookieName));
   const [currentUser, setCurrentUser] = React.useState(null);
   const [referrer, setReferrer] = React.useState("/");
-  
-  if (isFalse(currentUser) && isTrue(session)) {
-    const data = encrypt(session);
-    api.get('/auth/session', {
-      headers: {
-        'Authorization': `Bearer ${timedDigest(`GET/api/auth/session`)}`,
-      },
-      params: {data},
-    })
-    .then(res => setCurrentUser(res.data))
-    .catch(_ => setSession(null));
-  };
+
+  React.useEffect(() => {
+    let isCancelled = false;
+
+    if (isFalse(currentUser) && isTrue(session)) {
+      const data = encrypt(session);
+      api.get('/auth/session', {
+        headers: {
+          'Authorization': `Bearer ${timedDigest(`GET/api/auth/session`)}`,
+        },
+        params: { data },
+      })
+      .then(res => {
+        if (!isCancelled) {
+          setCurrentUser(res.data);
+        };
+      })
+      .catch(_ => {
+        if (!isCancelled) {
+          setSession(null);
+        };
+      });
+    };
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [currentUser, session]);
 
   React.useEffect(() => {
     if (isFalse(session)) {

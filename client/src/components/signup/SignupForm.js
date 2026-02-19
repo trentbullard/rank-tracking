@@ -43,6 +43,7 @@ const SignupForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     const passwordHash = hash(password);
     const sessionId = timedDigest(password);
@@ -168,7 +169,6 @@ const SignupForm = () => {
             loading={loading}
             size="large"
             fullWidth
-            onClick={onSubmit}
             disabled={isTrue(error)}
           >
             {loading ? 'loading' : 'submit'}
