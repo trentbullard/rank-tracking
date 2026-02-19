@@ -4,6 +4,7 @@ import Objective from './Objective.js';
 import Standing from './Standing.js';
 import Log from './Log.js';
 import Tag from './Tag.js';
+import User from './User.js';
 
 class Player extends Model {
   static get tableName() {
