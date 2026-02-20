@@ -2,6 +2,8 @@ import { Model } from 'objection';
 import Player from './Player.js';
 import League from './League.js';
 import Log from './Log.js';
+import Club from './Club.js';
+import ClubMember from './ClubMember.js';
 
 class User extends Model {
   static get tableName() {
@@ -51,6 +53,34 @@ class User extends Model {
         join: {
           from: 'users.id',
           to: 'leagues.owner_id',
+        },
+      },
+      owned_clubs: {
+        relation: Model.HasManyRelation,
+        modelClass: Club,
+        join: {
+          from: 'users.id',
+          to: 'clubs.owner_id',
+        },
+      },
+      club_memberships: {
+        relation: Model.HasManyRelation,
+        modelClass: ClubMember,
+        join: {
+          from: 'users.id',
+          to: 'club_members.user_id',
+        },
+      },
+      clubs: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Club,
+        join: {
+          from: 'users.id',
+          through: {
+            from: 'club_members.user_id',
+            to: 'club_members.club_id',
+          },
+          to: 'clubs.id',
         },
       },
       logs: {

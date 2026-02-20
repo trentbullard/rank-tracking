@@ -1,6 +1,8 @@
 import { Model } from 'objection';
 import Game from './Game.js';
 import Player from './Player.js';
+import League from './League.js';
+import Club from './Club.js';
 import Standing from './Standing.js';
 import Log from './Log.js';
 import Tag from './Tag.js';
@@ -27,6 +29,8 @@ class Team extends Model {
       properties: {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 255 },
+        league_id: { type: 'integer' },
+        club_id: { type: 'integer' },
       },
     };
   };
@@ -43,6 +47,22 @@ class Team extends Model {
             to: 'team_players.player_id',
           },
           to: 'players.id',
+        },
+      },
+      league: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: League,
+        join: {
+          from: 'teams.league_id',
+          to: 'leagues.id',
+        },
+      },
+      club: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Club,
+        join: {
+          from: 'teams.club_id',
+          to: 'clubs.id',
         },
       },
       games: {

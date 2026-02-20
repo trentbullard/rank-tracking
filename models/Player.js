@@ -5,6 +5,7 @@ import Standing from './Standing.js';
 import Log from './Log.js';
 import Tag from './Tag.js';
 import User from './User.js';
+import Club from './Club.js';
 
 class Player extends Model {
   static get tableName() {
@@ -31,6 +32,7 @@ class Player extends Model {
         last_name: { type: 'string' },
         designator: { type: 'string', minLength: 1, maxLength: 255 },
         user_id: { type: 'integer' },
+        club_id: { type: 'integer' },
       },
     };
   };
@@ -43,6 +45,14 @@ class Player extends Model {
         join: {
           from: 'players.user_id',
           to: 'users.id',
+        },
+      },
+      club: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Club,
+        join: {
+          from: 'players.club_id',
+          to: 'clubs.id',
         },
       },
       teams: {

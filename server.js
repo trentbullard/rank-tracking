@@ -33,6 +33,7 @@ app.get('/api', (req, res) => res.json({ message: 'ok' }));
 
 app.use('/api/auth', router.auth);
 app.use('/api/users', middleware.auth, router.users);
+app.use('/api/clubs', middleware.auth, router.clubs);
 app.use('/api/sports', middleware.auth, router.sports);
 app.use('/api/teams', middleware.auth, router.teams);
 app.use('/api/leagues', middleware.auth, router.leagues);

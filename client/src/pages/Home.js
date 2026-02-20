@@ -64,6 +64,7 @@ const Home = () => {
           divider={<Divider orientation="vertical" flexItem />}
           spacing={2}
         >
+          <StyledLink component={RouterLink} to="/clubs">CLUBS</StyledLink>
           <StyledLink component={RouterLink} to="/leagues">LEAGUES</StyledLink>
           <StyledLink component={RouterLink} to="/teams">TEAMS</StyledLink>
           <StyledLink component={RouterLink} to="/games">GAMES</StyledLink>

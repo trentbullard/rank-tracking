@@ -1,10 +1,12 @@
 import { Model } from 'objection';
 import User from './User.js';
 import Sport from './Sport.js';
+import Club from './Club.js';
 import Season from './Season.js';
 import Match from './Match.js';
 import Set from './Set.js';
 import Game from './Game.js';
+import Team from './Team.js';
 import Standing from './Standing.js';
 import Log from './Log.js';
 import Tag from './Tag.js';
@@ -34,6 +36,7 @@ class League extends Model {
         format: { type: 'string' },
         status: { type: 'string' },
         owner_id: { type: 'integer' },
+        club_id: { type: 'integer' },
         sport_id: { type: 'integer' },
       },
     };
@@ -47,6 +50,14 @@ class League extends Model {
         join: {
           from: 'leagues.owner_id',
           to: 'users.id',
+        },
+      },
+      club: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Club,
+        join: {
+          from: 'leagues.club_id',
+          to: 'clubs.id',
         },
       },
       sport: {
@@ -63,6 +74,14 @@ class League extends Model {
         join: {
           from: 'leagues.id',
           to: 'seasons.league_id',
+        },
+      },
+      teams: {
+        relation: Model.HasManyRelation,
+        modelClass: Team,
+        join: {
+          from: 'leagues.id',
+          to: 'teams.league_id',
         },
       },
       matches: {

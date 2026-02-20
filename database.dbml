@@ -11,17 +11,48 @@ table users {
   deleted_at timestamp
 }
 
+table clubs {
+  id int
+  name text
+  visibility text
+  status text
+  owner_id int
+  description text
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: clubs.owner_id > users.id
+
+table club_members {
+  id int
+  club_id int
+  user_id int
+  invited_by_user_id int
+  role text
+  status text
+  joined_at timestamp
+  created_at timestamp
+  deleted_at timestamp
+}
+
+ref: club_members.club_id > clubs.id
+ref: club_members.user_id > users.id
+ref: club_members.invited_by_user_id > users.id
+
 table players {
   id int
   first_name text
   last_name text
   designator text
   user_id int
+  club_id int
   created_at timestamp
   deleted_at timestamp
 }
 
 ref: players.user_id > users.id
+ref: players.club_id > clubs.id
 
 table sports {
   id int
@@ -54,12 +85,14 @@ table leagues {
   format text
   status text
   owner_id int
+  club_id int
   sport_id int
   created_at timestamp
   deleted_at timestamp
 }
 
 ref: leagues.owner_id > users.id
+ref: leagues.club_id > clubs.id
 ref: leagues.sport_id > sports.id
 
 table seasons {
@@ -79,11 +112,13 @@ ref: seasons.league_id > leagues.id
 table teams {
   id int
   name text
+  club_id int
   league_id int
   created_at timestamp
   deleted_at timestamp
 }
 
+ref: teams.club_id > clubs.id
 ref: teams.league_id > leagues.id
 
 table matches {

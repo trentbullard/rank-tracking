@@ -14,11 +14,14 @@ import FlashProvider from './contexts/FlashContext';
 import NewGameProvider from './contexts/NewGameContext';
 import App from "./components/App";
 import Home from './pages/Home';
+import Clubs from './pages/club/Clubs';
+import NewClub from './pages/club/NewClub';
 import Leagues from './pages/league/Leagues';
 import Teams from './pages/team/Teams';
 import Games from './pages/game/Games';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ClubDetails from './pages/club/ClubDetails';
 import LeagueDetails from './pages/league/LeagueDetails';
 import NewLeague from './pages/league/NewLeague';
 import NewGame from './pages/game/NewGame';
@@ -62,6 +65,9 @@ const startApp = async () => {
                 <Routes>
                   <Route path="/" element={<App />}>
                     <Route index element={<AuthComponent element={<Home />} />} />
+                    <Route path="clubs" element={<AuthComponent element={<Clubs />} />} />
+                    <Route path="clubs/new" element={<AuthComponent element={<NewClub />} />} />
+                    <Route path="clubs/:id" element={<AuthComponent element={<ClubDetails />} />} />
                     <Route path="leagues" element={<AuthComponent element={<Leagues />} />} />
                     <Route path="leagues/new" element={<AuthComponent element={<NewLeague />} />} />
                     <Route path="leagues/:id" element={<AuthComponent element={<LeagueDetails />} />} />

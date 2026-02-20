@@ -30,6 +30,8 @@ export const seed = async (knex) => {
       "teams",
       "seasons",
       "leagues",
+      "club_members",
+      "clubs",
       "objectives",
       "positions",
       "sports",
@@ -70,15 +72,23 @@ export const seed = async (knex) => {
     {email: 'some@thing.com', password_hash: passwordHash, first_name: 'trent', last_name: 'bullard', },
   ]);
 
+  await knex('clubs').insert([
+    {name: 'A Test Club', visibility: 'private', status: 'active', owner_id: 1},
+  ]);
+
+  await knex('club_members').insert([
+    {club_id: 1, user_id: 1, invited_by_user_id: 1, role: 'owner', status: 'active', joined_at: knex.fn.now()},
+  ]);
+
   await knex('players').insert([
-    {first_name: 'trent', last_name: 'bullard', designator: '1111', user_id: 1},
+    {first_name: 'trent', last_name: 'bullard', designator: '1111', user_id: 1, club_id: 1},
   ]);
 
   await knex('leagues').insert([
-    {name: 'test foosball league 1', format: 'elo', owner_id: 1, sport_id: 1},
-    {name: 'test cornhole league 1', format: 'elo', owner_id: 1, sport_id: 2},
-    {name: 'test tabletennis league 1', format: 'elo', owner_id: 1, sport_id: 3},
-    {name: 'test soccer league 1', format: 'elo', owner_id: 1, sport_id: 4},
+    {name: 'test foosball league 1', format: 'elo', owner_id: 1, club_id: 1, sport_id: 1},
+    {name: 'test cornhole league 1', format: 'elo', owner_id: 1, club_id: 1, sport_id: 2},
+    {name: 'test tabletennis league 1', format: 'elo', owner_id: 1, club_id: 1, sport_id: 3},
+    {name: 'test soccer league 1', format: 'elo', owner_id: 1, club_id: 1, sport_id: 4},
   ]);
 
   await knex('seasons').insert([
@@ -109,7 +119,7 @@ export const seed = async (knex) => {
   ]);
 
   await knex('teams').insert([
-    {name: 'test team 1'},
+    {name: 'test team 1', club_id: 1, league_id: 1},
   ]);
 
   await knex('team_players').insert([
