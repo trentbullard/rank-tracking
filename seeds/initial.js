@@ -41,10 +41,18 @@ export const seed = async (knex) => {
   `);
 
   await knex('sports').insert([
-    {name: 'foosball'},
+    {name: 'badminton'},
+    {name: 'baseball'},
+    {name: 'basketball'},
     {name: 'cornhole'},
-    {name: 'tabletennis'},
+    {name: 'foosball'},
+    {name: 'football'},
+    {name: 'hockey'},
+    {name: 'other'},
     {name: 'soccer'},
+    {name: 'tabletennis'},
+    {name: 'tennis'},
+    {name: 'volleyball'},
   ]);
 
   await knex('positions').insert([

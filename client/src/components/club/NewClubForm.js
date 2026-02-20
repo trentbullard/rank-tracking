@@ -12,11 +12,23 @@ import {
   TextField,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { motion } from 'framer-motion';
 
 import api from '../../api/api';
 import { AuthContext } from '../../contexts/AuthContext';
 import { FlashContext } from '../../contexts/FlashContext';
 import { isFalse } from '../../helpers/boolean';
+
+let easing = [0.6, -0.05, 0.01, 0.99];
+const animate = {
+  opacity: 1,
+  y: 0,
+  transition: {
+    duration: 0.6,
+    ease: easing,
+    delay: 0.16,
+  },
+};
 
 const visibilityOptions = [
   { value: 'private', label: 'Private' },
@@ -70,6 +82,9 @@ const NewClubForm = () => {
   return (
     <Box component="form" onSubmit={onSubmit} width="100%">
       <Box
+        component={motion.div}
+        initial={{ opacity: 0, y: 40 }}
+        animate={animate}
         sx={{
           display: 'flex',
           flexDirection: 'column',

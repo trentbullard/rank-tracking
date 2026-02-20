@@ -1,26 +1,26 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import HomeIcon from "@mui/icons-material/Home";
 
 const style = {
   margin: 0,
   top: ".5rem",
   right: "auto",
   bottom: "auto",
-  left: ".5rem",
+  left: "3.5rem",
   position: "fixed",
   ariaLabel: "login",
   fontSize: "2rem",
   cursor: "pointer",
 };
 
-const BackButton = () => {
+const HomeButton = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
     pathname === "/" || pathname === "/login" ? null :
-      <ArrowBackIcon color="secondary" style={style} onClick={() => navigate(-1)} />
+      <HomeIcon color="secondary" style={style} onClick={() => navigate("/")} />
   );
 };
 
-export default BackButton;
+export default HomeButton;

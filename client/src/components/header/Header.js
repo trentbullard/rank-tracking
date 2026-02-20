@@ -4,6 +4,7 @@ import { Box, Typography, Link } from '@mui/material';
 
 import UserArea from './UserArea';
 import BackButton from './BackButton';
+import HomeButton from './HomeButton';
 
 const Header = () => {
   return (
@@ -17,6 +18,7 @@ const Header = () => {
         </Typography>
       </Box>
       <BackButton />
+      <HomeButton />
       <UserArea />
     </>
   )
