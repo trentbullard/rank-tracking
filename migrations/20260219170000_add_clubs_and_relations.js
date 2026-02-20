@@ -111,8 +111,8 @@ export const up = async (knex) => {
         s.rankable_id AS team_id,
         MIN(s.contest_id) AS league_id
       FROM standings AS s
-      WHERE s.rankable_type IN ('team', 'teams')
-        AND s.contest_type IN ('league', 'leagues')
+      WHERE LOWER(s.rankable_type::text) IN ('team', 'teams')
+        AND LOWER(s.contest_type::text) IN ('league', 'leagues')
       GROUP BY s.rankable_id
     ) AS source
     WHERE t.id = source.team_id
